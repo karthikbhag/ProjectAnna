@@ -12,7 +12,6 @@ Env:
 
 import os
 import json
-import glob
 import logging
 import random
 from typing import Dict, List
@@ -50,7 +49,7 @@ os.makedirs(JSON_DATA_DIR, exist_ok=True)
 logger.info(f"📁 JSON data dir: {JSON_DATA_DIR}")
 
 # ==========================
-# 🔐 Gemini Setup (google-genai 1.49.0 style)
+# 🔐 Gemini Setup (google-genai 1.49.0)
 # ==========================
 
 env_path = BASE_DIR / ".env"
@@ -64,8 +63,7 @@ if not GEMINI_API_KEY:
 
 try:
     gemini_client = genai.Client(api_key=GEMINI_API_KEY)
-    # Light sanity check
-    _ = list(gemini_client.models.list())
+    _ = list(gemini_client.models.list())  # sanity check
     logger.info("✅ Gemini client initialized successfully.")
 except Exception as e:
     raise RuntimeError(f"❌ Failed to initialize Gemini client: {e}")
@@ -90,11 +88,14 @@ logger.info("✅ Sentiment model loaded successfully.")
 sentiment_cache: Dict[str, object] = {}
 
 # ==========================
-# 🧠 Sentiment Logic
+# 🧠 Sentiment Logic (Improved)
 # ==========================
 
 def sentiment_analysis_improved(text: str) -> Dict:
-    if not text or not text.strip():
+    """
+    1-5 style score with robust neutral handling.
+    """
+    if not text or not str(text).strip():
         return {
             "score": 3.0,
             "label": "neutral",
@@ -103,7 +104,7 @@ def sentiment_analysis_improved(text: str) -> Dict:
         }
 
     inputs = tokenizer(
-        text,
+        str(text),
         return_tensors="pt",
         truncation=True,
         padding=True,
@@ -117,8 +118,10 @@ def sentiment_analysis_improved(text: str) -> Dict:
     probs = softmax(logits)
     p_neg, p_neu, p_pos = probs
 
+    # Weighted 1–5 score
     score = 1 * p_neg + 3 * p_neu + 5 * p_pos
 
+    # Improved labeling
     if p_neu > 0.5:
         label = "neutral"
     elif p_neg > 0.2 and p_pos > 0.2:
@@ -152,13 +155,30 @@ def sentiment_analysis_improved(text: str) -> Dict:
     }
 
 # ==========================
-# 📦 JSON Processing
+# 📦 JSON Text Extraction
 # ==========================
 
 def extract_text_from_review(review: dict) -> str:
+    """
+    Aggressive text extraction.
+    Critical: if this returns "", that item gets NO sentiment.
+    Handles:
+    - title / text
+    - review_text, full_text, etc
+    - nested text objects
+    - plain string reviews
+    - fallback: concat all string fields
+    """
+    # If it's literally a string, treat as the review body
+    if isinstance(review, str):
+        return review.strip()
+
+    if not isinstance(review, dict):
+        return ""
+
+    # Priority 1: title + text
     title = (review.get("title") or "").strip()
     text = (review.get("text") or "").strip()
-
     if title and text:
         return f"{title}. {text}"
     if text:
@@ -166,13 +186,73 @@ def extract_text_from_review(review: dict) -> str:
     if title:
         return title
 
-    for field in ["comment", "review", "content", "message", "body"]:
-        val = review.get(field)
-        if val:
-            return str(val)
+    # Priority 2: common fields
+    candidate_keys = [
+        "full_text",
+        "fullText",
+        "review_text",
+        "reviewText",
+        "body",
+        "comment",
+        "review",
+        "content",
+        "message",
+        "description",
+    ]
+    for key in candidate_keys:
+        val = review.get(key)
+        if isinstance(val, str) and val.strip():
+            return val.strip()
+
+    # Priority 3: nested "text": { "raw": "..." }
+    nested = review.get("text")
+    if isinstance(nested, dict):
+        for _, v in nested.items():
+            if isinstance(v, str) and v.strip():
+                return v.strip()
+
+    # Priority 4: generic heuristic —
+    # grab any string-ish fields that look like sentences and join them
+    parts = []
+    for k, v in review.items():
+        if isinstance(v, str):
+            s = v.strip()
+            # avoid obvious non-review fields like IDs
+            if s and len(s) > 8 and not k.lower() in ["id", "store_id", "user_id"]:
+                parts.append(s)
+    if parts:
+        return " ".join(parts)
+
     return ""
 
+# ==========================
+# 📦 JSON Processing
+# ==========================
+
 def process_nested_json(json_data: dict, filename: str) -> List[Dict]:
+    """
+    Handles location-structured JSON:
+    {
+      "states": [
+        {
+          "state": "...",
+          "cities": [
+            {
+              "city": "...",
+              "stores": [
+                {
+                  "store_id": "...",
+                  "store_name": "...",
+                  "address": "...",
+                  "reviews": [ {...}, "text", ... ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    """
     results = []
     if "states" not in json_data:
         return results
@@ -201,22 +281,26 @@ def process_nested_json(json_data: dict, filename: str) -> List[Dict]:
 
                     sent = sentiment_analysis_improved(text)
 
+                    # Normalize review dict if it's not one
+                    review_dict = review if isinstance(review, dict) else {}
+
                     results.append({
                         **store_info,
                         "_source_file": filename,
                         "_structure": "nested",
-                        "title": review.get("title", ""),
-                        "text": review.get("text", ""),
+                        "title": review_dict.get("title", ""),
+                        "text": review_dict.get("text", ""),
                         "full_text": text,
-                        "original_rating": review.get("rating"),
-                        "original_sentiment": review.get("sentiment"),
-                        "date": review.get("date", ""),
+                        "original_rating": review_dict.get("rating"),
+                        "original_sentiment": review_dict.get("sentiment"),
+                        "date": review_dict.get("date", ""),
                         "sentiment_score": sent["score"],
                         "sentiment_label": sent["label"],
                         "sentiment_confidence": sent["confidence"],
                         "sentiment_probabilities": sent["probabilities"],
                     })
 
+    logger.info(f"✅ Nested parsed from {filename}: {len(results)} rows")
     return results
 
 def process_flat_json(json_data, filename: str) -> List[Dict]:
@@ -247,17 +331,22 @@ def process_flat_json(json_data, filename: str) -> List[Dict]:
     logger.info(f"📥 Processing flat JSON from {filename}: {len(items)} items")
 
     for item in items:
-        if not isinstance(item, dict):
+        # allow plain string items as reviews
+        if isinstance(item, str):
+            text = item.strip()
+        elif isinstance(item, dict):
+            text = extract_text_from_review(item)
+        else:
             continue
 
-        text = extract_text_from_review(item)
         if not text:
             continue
 
         sent = sentiment_analysis_improved(text)
+        base = item if isinstance(item, dict) else {"raw": item}
 
         results.append({
-            **item,
+            **base,
             "_source_file": filename,
             "_structure": "flat",
             "full_text": text,
@@ -267,6 +356,7 @@ def process_flat_json(json_data, filename: str) -> List[Dict]:
             "sentiment_probabilities": sent["probabilities"],
         })
 
+    logger.info(f"✅ Flat parsed from {filename}: {len(results)} rows")
     return results
 
 def load_and_process_json_file(path: Path) -> List[Dict]:
@@ -459,10 +549,6 @@ def analyze_single():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    """
-    Used by frontend.
-    Body: { "message": "...", "use_latest_data": true }
-    """
     if "latest" not in sentiment_cache or "summary" not in sentiment_cache:
         return jsonify({"response": "Please load the data first from the dashboard."}), 400
 
@@ -481,64 +567,64 @@ def chat():
     city_names = geo.get("city_names", []) or []
     state_names = geo.get("state_names", []) or []
 
-    # ---- Shortcut 1: "What users like" / "What do users like" ----
+    # 1) What users like
     if "what do users like" in lower or "what users like" in lower or "what people like" in lower:
-        positive = [
-            r for r in all_reviews
-            if "positive" in r["sentiment_label"]
-        ]
-        # Use small subset to summarize
+        positive = [r for r in all_reviews if "positive" in r["sentiment_label"]]
         sample = positive[:100]
         sample_texts = [r["full_text"] for r in sample]
 
         prompt = (
             "You are Ana, a T-Mobile Data Analyst.\n"
-            "Based ONLY on the following customer reviews (all positive or slightly positive), "
+            "Based ONLY on the following positive/slightly positive reviews, "
             "summarize the top themes of what users like in 5 bullet points.\n\n"
             + "\n\n".join(sample_texts)
         )
-
         try:
             resp = gemini_client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=prompt,
             )
-            reply = getattr(resp, "text", None) or "Users appreciate network quality, staff, and promotions."
+            reply = getattr(resp, "text", None) or \
+                "Users appreciate network quality, staff interactions, and available promotions."
             return jsonify({"response": reply}), 200
         except Exception as e:
             logger.error(f"❌ /chat like-summary error: {e}")
             return jsonify({"response": "Error summarizing liked aspects."}), 500
 
-    # ---- Shortcut 2: "Main complaints" / "issues" / "problems" ----
-    if "complaint" in lower or "complaints" in lower or "issues" in lower or "problems" in lower:
-        negative = [
-            r for r in all_reviews
-            if "negative" in r["sentiment_label"]
-        ]
+    # 2) Complaints / issues
+    if any(w in lower for w in ["complaint", "complaints", "issues", "problems"]):
+        negative = [r for r in all_reviews if "negative" in r["sentiment_label"]]
         sample = negative[:100]
         sample_texts = [r["full_text"] for r in sample]
 
         prompt = (
             "You are Ana, a T-Mobile Data Analyst.\n"
-            "Based ONLY on the following negative or slightly negative reviews, "
+            "Based ONLY on the following negative/slightly negative reviews, "
             "summarize the main complaints in 5 bullet points.\n\n"
             + "\n\n".join(sample_texts)
         )
-
         try:
             resp = gemini_client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=prompt,
             )
-            reply = getattr(resp, "text", None) or "Customers mention some issues with service, support, or billing."
+            reply = getattr(resp, "text", None) or \
+                "Customers mention service reliability, store experience, and billing clarity."
             return jsonify({"response": reply}), 200
         except Exception as e:
             logger.error(f"❌ /chat complaints-summary error: {e}")
             return jsonify({"response": "Error summarizing complaints."}), 500
 
-    # ---- Shortcut 3: "Top locations" / "best locations" ----
-    if ("top" in lower and "location" in lower) or ("best locations" in lower):
-        # Build location stats
+    # 3) Top / best locations
+        # ---- Shortcut 3: "Top locations / places / stores" ----
+    if (
+        ("top" in lower and any(w in lower for w in ["location", "locations", "place", "places", "store", "stores"]))
+        or ("best locations" in lower)
+        or ("top 5 places" in lower)
+        or ("top 5 stores" in lower)
+    ):
+        # Build location stat
+        
         location_map = {}
         for r in all_reviews:
             city = r.get("city")
@@ -557,7 +643,7 @@ def chat():
 
         ranked = sorted(
             location_map.items(),
-            key=lambda kv: (kv[1]["pos"] / kv[1]["total"], kv[1]["pos"]),
+            key=lambda kv: ((kv[1]["pos"] / kv[1]["total"]) if kv[1]["total"] else 0, kv[1]["pos"]),
             reverse=True,
         )
         top_n = ranked[:5]
@@ -575,16 +661,16 @@ def chat():
         reply = "Here are the top performing locations based on sentiment:\n" + "\n".join(lines)
         return jsonify({"response": reply}), 200
 
-    # ---- Shortcut 4: random city ----
+    # 4) Random city
     if "random city" in lower:
         if city_names:
             city = random.choice(city_names)
             return jsonify({"response": f"Here's a random city from the dataset: {city}"}), 200
         return jsonify({"response": "I don't have any city names available in the data."}), 200
 
-    # ---- Shortcut 5: specific city like "dallas" ----
+    # 5) Specific city (e.g., Dallas)
     for city in city_names:
-        if city.lower() in lower:
+        if city and city.lower() in lower:
             city_reviews = [r for r in all_reviews if str(r.get("city", "")).lower() == city.lower()]
             if city_reviews:
                 pos = sum(1 for r in city_reviews if "positive" in r["sentiment_label"])
@@ -595,18 +681,11 @@ def chat():
                     f"{pos} positive, {neg} negative, {neu} neutral/slightly mixed."
                 )
                 return jsonify({"response": reply}), 200
-            else:
-                return jsonify({
-                    "response": f"{city} appears in coverage, but I couldn't find detailed reviews stored for it."
-                }), 200
 
-    # ---- Fallback: full Gemini Q&A grounded in data ----
-
+    # 6) Fallback: grounded Gemini over summary + sample
     if not use_latest:
-        # If user explicitly disables data grounding
         system_instruction = (
-            "You are Ana, a helpful T-Mobile assistant. "
-            "Respond briefly and professionally."
+            "You are Ana, a helpful T-Mobile assistant. Respond briefly and professionally."
         )
         try:
             session = gemini_client.chats.create(
@@ -617,10 +696,9 @@ def chat():
             reply = getattr(resp, "text", None) or "I couldn't generate a response."
             return jsonify({"response": reply}), 200
         except Exception as e:
-            logger.error(f"❌ /chat ungrouned error: {e}")
+            logger.error(f"❌ /chat ungrounded error: {e}")
             return jsonify({"response": f"Server error: {e}"}), 500
 
-    # Grounded mode: summary + sample
     sample = all_reviews[:80]
     context = (
         "You are Ana, a T-Mobile Data Analyst Bot. "

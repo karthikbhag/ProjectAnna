@@ -1,7 +1,7 @@
 {
   "dataset_name": "T-Mobile Store Reviews",
-  "generated_date": "2025-11-09",
-  "total_states": 5,
+  "generated_date": "2025-11-09 11:26:26",
+  "total_states": 2,
   "states": [
     {
       "state": "Texas",
@@ -12,18 +12,80 @@
             {
               "store_id": "TX-DAL-001",
               "store_name": "T-Mobile Dallas Store",
-              "address": "8241 Main St, Dallas, TX 75001",
+              "address": "844 Main St, Dallas, TX 75001",
               "city": "Dallas",
               "state": "Texas",
               "reviews": [
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-10-13" },
-                { "title": "Great customer service", "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.", "rating": 5, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 1, "sentiment": "negative", "date": "2025-10-19" },
-                { "title": "Slow speeds", "text": "Network is congested. Can barely stream videos.", "rating": 1, "sentiment": "negative", "date": "2025-10-20" },
-                { "title": "Okay coverage", "text": "Coverage is decent in most areas, spotty in some.", "rating": 3, "sentiment": "neutral", "date": "2025-10-26" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-11-09" },
-                { "title": "Standard service", "text": "Got what I expected. No surprises, good or bad.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-01"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-02"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-10-30"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-04"
+                },
+                {
+                  "title": "Poor customer service",
+                  "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-05"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-26"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-22"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-23"
+                },
+                {
+                  "title": "Mixed feelings",
+                  "text": "Good price but coverage could be better.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-04"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-08"
+                }
               ]
             }
           ]
@@ -34,20 +96,73 @@
             {
               "store_id": "TX-HOU-002",
               "store_name": "T-Mobile Houston Store",
-              "address": "532 Main St, Houston, TX 75002",
+              "address": "4177 Main St, Houston, TX 75002",
               "city": "Houston",
               "state": "Texas",
               "reviews": [
-                { "title": "Fast data speeds", "text": "Upload and download speeds are excellent in my area.", "rating": 5, "sentiment": "positive", "date": "2025-11-08" },
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 5, "sentiment": "positive", "date": "2025-10-30" },
-                { "title": "Fast data speeds", "text": "Upload and download speeds are excellent in my area.", "rating": 5, "sentiment": "positive", "date": "2025-10-29" },
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 4, "sentiment": "positive", "date": "2025-11-01" },
-                { "title": "Fast data speeds", "text": "Upload and download speeds are excellent in my area.", "rating": 4, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 1, "sentiment": "negative", "date": "2025-11-09" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 2, "sentiment": "negative", "date": "2025-10-19" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-10-22" },
-                { "title": "Mixed feelings", "text": "Good price but coverage could be better.", "rating": 3, "sentiment": "neutral", "date": "2025-10-28" },
-                { "title": "Okay coverage", "text": "Coverage is decent in most areas, spotty in some.", "rating": 3, "sentiment": "neutral", "date": "2025-10-14" }
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-04"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-10-10"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-31"
+                },
+                {
+                  "title": "Great customer service",
+                  "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-05"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-03"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-29"
+                },
+                {
+                  "title": "It works",
+                  "text": "Does the job. Had better, had worse.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-11"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-12"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-04"
+                }
               ]
             }
           ]
@@ -58,19 +173,66 @@
             {
               "store_id": "TX-AUS-003",
               "store_name": "T-Mobile Austin Store",
-              "address": "4453 Main St, Austin, TX 75003",
+              "address": "2887 Main St, Austin, TX 75003",
               "city": "Austin",
               "state": "Texas",
               "reviews": [
-                { "title": "Fast data speeds", "text": "Upload and download speeds are excellent in my area.", "rating": 5, "sentiment": "positive", "date": "2025-10-11" },
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 4, "sentiment": "positive", "date": "2025-11-07" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-10-24" },
-                { "title": "Poor customer service", "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.", "rating": 1, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Terrible coverage", "text": "Dead zones everywhere. Can't even load basic websites.", "rating": 1, "sentiment": "negative", "date": "2025-10-22" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 1, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-10-22" },
-                { "title": "Mixed feelings", "text": "Good price but coverage could be better.", "rating": 3, "sentiment": "neutral", "date": "2025-10-18" }
+                {
+                  "title": "Great customer service",
+                  "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-05"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-25"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-08"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-10-12"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-11"
+                },
+                {
+                  "title": "Billing issues",
+                  "text": "Charged extra fees that weren't explained. Bill is confusing.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-25"
+                },
+                {
+                  "title": "Poor customer service",
+                  "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-16"
+                },
+                {
+                  "title": "Standard service",
+                  "text": "Got what I expected. No surprises, good or bad.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-02"
+                }
               ]
             }
           ]
@@ -81,19 +243,52 @@
             {
               "store_id": "TX-SAN-004",
               "store_name": "T-Mobile San Antonio Store",
-              "address": "9342 Main St, San Antonio, TX 75004",
+              "address": "8802 Main St, San Antonio, TX 75004",
               "city": "San Antonio",
               "state": "Texas",
               "reviews": [
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 5, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Great customer service", "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.", "rating": 5, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-10-22" },
-                { "title": "Poor customer service", "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.", "rating": 1, "sentiment": "negative", "date": "2025-11-05" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 1, "sentiment": "negative", "date": "2025-10-22" },
-                { "title": "Slow speeds", "text": "Network is congested. Can barely stream videos.", "rating": 1, "sentiment": "negative", "date": "2025-10-15" },
-                { "title": "Slow speeds", "text": "Network is congested. Can barely stream videos.", "rating": 1, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "It works", "text": "Does the job. Had better, had worse.", "rating": 3, "sentiment": "neutral", "date": "2025-10-17" },
-                { "title": "Okay coverage", "text": "Coverage is decent in most areas, spotty in some.", "rating": 3, "sentiment": "neutral", "date": "2025-11-02" }
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-16"
+                },
+                {
+                  "title": "Reliable network",
+                  "text": "No dropped calls, stable connection throughout the day.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-26"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-11"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-26"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-29"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-28"
+                }
               ]
             }
           ]
@@ -104,15 +299,66 @@
             {
               "store_id": "TX-FOR-005",
               "store_name": "T-Mobile Fort Worth Store",
-              "address": "6078 Main St, Fort Worth, TX 75005",
+              "address": "4766 Main St, Fort Worth, TX 75005",
               "city": "Fort Worth",
               "state": "Texas",
               "reviews": [
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 5, "sentiment": "positive", "date": "2025-10-15" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-10-26" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 2, "sentiment": "negative", "date": "2025-10-18" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-10-29" },
-                { "title": "Standard service", "text": "Got what I expected. No surprises, good or bad.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" }
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-08"
+                },
+                {
+                  "title": "Reliable network",
+                  "text": "No dropped calls, stable connection throughout the day.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-20"
+                },
+                {
+                  "title": "Reliable network",
+                  "text": "No dropped calls, stable connection throughout the day.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-04"
+                },
+                {
+                  "title": "Poor customer service",
+                  "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-27"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-23"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-20"
+                },
+                {
+                  "title": "Standard service",
+                  "text": "Got what I expected. No surprises, good or bad.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-25"
+                },
+                {
+                  "title": "Standard service",
+                  "text": "Got what I expected. No surprises, good or bad.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-15"
+                }
               ]
             }
           ]
@@ -128,19 +374,66 @@
             {
               "store_id": "CA-LOS-001",
               "store_name": "T-Mobile Los Angeles Store",
-              "address": "8045 Market St, Los Angeles, CA 90001",
+              "address": "4313 Market St, Los Angeles, CA 90001",
               "city": "Los Angeles",
               "state": "California",
               "reviews": [
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 5, "sentiment": "positive", "date": "2025-10-16" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 1, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Slow speeds", "text": "Network is congested. Can barely stream videos.", "rating": 1, "sentiment": "negative", "date": "2025-10-17" },
-                { "title": "Terrible coverage", "text": "Dead zones everywhere. Can't even load basic websites.", "rating": 1, "sentiment": "negative", "date": "2025-10-13" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-10-23" },
-                { "title": "Okay coverage", "text": "Coverage is decent in most areas, spotty in some.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "Okay coverage", "text": "Coverage is decent in most areas, spotty in some.", "rating": 3, "sentiment": "neutral", "date": "2025-11-08" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-10-29" }
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-14"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-16"
+                },
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-10-14"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-26"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-15"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-30"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-05"
+                },
+                {
+                  "title": "It works",
+                  "text": "Does the job. Had better, had worse.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-05"
+                }
               ]
             }
           ]
@@ -151,19 +444,80 @@
             {
               "store_id": "CA-SAN-002",
               "store_name": "T-Mobile San Francisco Store",
-              "address": "4459 Market St, San Francisco, CA 90002",
+              "address": "3397 Market St, San Francisco, CA 90002",
               "city": "San Francisco",
               "state": "California",
               "reviews": [
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 4, "sentiment": "positive", "date": "2025-11-09" },
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 5, "sentiment": "positive", "date": "2025-11-06" },
-                { "title": "Fast data speeds", "text": "Upload and download speeds are excellent in my area.", "rating": 4, "sentiment": "positive", "date": "2025-10-30" },
-                { "title": "Poor customer service", "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.", "rating": 2, "sentiment": "negative", "date": "2025-10-11" },
-                { "title": "Poor customer service", "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.", "rating": 2, "sentiment": "negative", "date": "2025-10-21" },
-                { "title": "Slow speeds", "text": "Network is congested. Can barely stream videos.", "rating": 1, "sentiment": "negative", "date": "2025-10-14" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-10-30" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-10-12" }
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-19"
+                },
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-03"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-18"
+                },
+                {
+                  "title": "Best decision ever",
+                  "text": "Switched from Verizon and loving the coverage and price.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-06"
+                },
+                {
+                  "title": "Great customer service",
+                  "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-07"
+                },
+                {
+                  "title": "Billing issues",
+                  "text": "Charged extra fees that weren't explained. Bill is confusing.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-05"
+                },
+                {
+                  "title": "Billing issues",
+                  "text": "Charged extra fees that weren't explained. Bill is confusing.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-23"
+                },
+                {
+                  "title": "Billing issues",
+                  "text": "Charged extra fees that weren't explained. Bill is confusing.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-11-06"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-10"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-11"
+                }
               ]
             }
           ]
@@ -174,21 +528,73 @@
             {
               "store_id": "CA-SAN-003",
               "store_name": "T-Mobile San Diego Store",
-              "address": "8707 Market St, San Diego, CA 90003",
+              "address": "5880 Market St, San Diego, CA 90003",
               "city": "San Diego",
               "state": "California",
               "reviews": [
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 4, "sentiment": "positive", "date": "2025-10-24" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 5, "sentiment": "positive", "date": "2025-10-23" },
-                { "title": "Great customer service", "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.", "rating": 5, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 4, "sentiment": "positive", "date": "2025-11-09" },
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 4, "sentiment": "positive", "date": "2025-10-15" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 1, "sentiment": "negative", "date": "2025-10-13" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Terrible coverage", "text": "Dead zones everywhere. Can't even load basic websites.", "rating": 2, "sentiment": "negative", "date": "2025-11-05" },
-                { "title": "Mixed feelings", "text": "Good price but coverage could be better.", "rating": 3, "sentiment": "neutral", "date": "2025-11-04" },
-                { "title": "It works", "text": "Does the job. Had better, had worse.", "rating": 3, "sentiment": "neutral", "date": "2025-11-08" },
-                { "title": "It works", "text": "Does the job. Had better, had worse.", "rating": 3, "sentiment": "neutral", "date": "2025-10-14" }
+                {
+                  "title": "Reliable network",
+                  "text": "No dropped calls, stable connection throughout the day.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-15"
+                },
+                {
+                  "title": "Great customer service",
+                  "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-14"
+                },
+                {
+                  "title": "Fast data speeds",
+                  "text": "Upload and download speeds are excellent in my area.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-11-01"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-19"
+                },
+                {
+                  "title": "Network keeps dropping",
+                  "text": "Constantly losing signal and calls drop frequently. Very frustrating.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-11-04"
+                },
+                {
+                  "title": "Slow speeds",
+                  "text": "Network is congested. Can barely stream videos.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-10-11"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-10"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-06"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-11-04"
+                }
               ]
             }
           ]
@@ -199,399 +605,59 @@
             {
               "store_id": "CA-SAC-004",
               "store_name": "T-Mobile Sacramento Store",
-              "address": "2728 Market St, Sacramento, CA 90004",
+              "address": "9056 Market St, Sacramento, CA 90004",
               "city": "Sacramento",
               "state": "California",
               "reviews": [
-                { "title": "Great customer service", "text": "The staff was helpful and knowledgeable. Fixed my issue quickly.", "rating": 4, "sentiment": "positive", "date": "2025-11-08" },
-                { "title": "Amazing 5G speeds!", "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!", "rating": 4, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Reliable network", "text": "No dropped calls, stable connection throughout the day.", "rating": 5, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Best decision ever", "text": "Switched from Verizon and loving the coverage and price.", "rating": 5, "sentiment": "positive", "date": "2025-10-10" },
-                { "title": "Network keeps dropping", "text": "Constantly losing signal and calls drop frequently. Very frustrating.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Billing issues", "text": "Charged extra fees that weren't explained. Bill is confusing.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Poor customer service", "text": "Staff was rude and unhelpful. Waited an hour just to be dismissed.", "rating": 1, "sentiment": "negative", "date": "2025-10-15" },
-                { "title": "Standard service", "text": "Got what I expected. No surprises, good or bad.", "rating": 3, "sentiment": "neutral", "date": "2025-11-04" },
-                { "title": "It works", "text": "Does the job. Had better, had worse.", "rating": 3, "sentiment": "neutral", "date": "2025-10-19" },
-                { "title": "Average experience", "text": "Nothing special. Service works but nothing to write home about.", "rating": 3, "sentiment": "neutral", "date": "2025-10-30" }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    {
-      "state": "Florida",
-      "cities": [
-        {
-          "city": "Jacksonville",
-          "stores": [
-            {
-              "store_id": "FL-JAX-001",
-              "store_name": "T-Mobile Jacksonville Store",
-              "address": "1201 Main St, Jacksonville, FL 32099",
-              "city": "Jacksonville",
-              "state": "Florida",
-              "reviews": [
-                { "title": "Reliable network", "text": "Solid reliability on calls and data during my commute.", "rating": 5, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Amazing 5G speeds!", "text": "Bandwidth was great—large app updates finished fast.", "rating": 5, "sentiment": "positive", "date": "2025-10-27" },
-                { "title": "Helpful staff", "text": "Rep explained promo clearly and set up my eSIM.", "rating": 4, "sentiment": "positive", "date": "2025-11-02" },
-                { "title": "Consistent coverage", "text": "Coverage is strong indoors downtown.", "rating": 4, "sentiment": "positive", "date": "2025-10-20" },
-                { "title": "Latency spikes", "text": "Evening latency jumps during games; pages lag.", "rating": 2, "sentiment": "negative", "date": "2025-10-31" },
-                { "title": "Billing confusion", "text": "Fee on first bill wasn’t explained—got fixed but annoying.", "rating": 2, "sentiment": "negative", "date": "2025-10-18" },
-                { "title": "Intermittent drops", "text": "A few dropped connections on the Southside this week.", "rating": 2, "sentiment": "negative", "date": "2025-11-06" },
-                { "title": "Average visit", "text": "Checkout worked; wait time was okay.", "rating": 3, "sentiment": "neutral", "date": "2025-10-22" },
-                { "title": "Okay coverage", "text": "Most areas fine; a couple dead zones near the river.", "rating": 3, "sentiment": "neutral", "date": "2025-11-04" },
-                { "title": "Standard service", "text": "Nothing special, did what I needed.", "rating": 3, "sentiment": "neutral", "date": "2025-10-14" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Miami",
-          "stores": [
-            {
-              "store_id": "FL-MIA-002",
-              "store_name": "T-Mobile Miami Store",
-              "address": "2330 Biscayne Blvd, Miami, FL 33137",
-              "city": "Miami",
-              "state": "Florida",
-              "reviews": [
-                { "title": "Fast data speeds", "text": "Throughput downtown was excellent—video calls were crisp.", "rating": 5, "sentiment": "positive", "date": "2025-10-29" },
-                { "title": "Great upgrade help", "text": "They migrated my data and set up Wi-Fi calling.", "rating": 5, "sentiment": "positive", "date": "2025-11-07" },
-                { "title": "Good coverage in Brickell", "text": "Signal bars stayed full in high-rises.", "rating": 4, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Professional staff", "text": "Clear communication and no pressure.", "rating": 4, "sentiment": "positive", "date": "2025-10-19" },
-                { "title": "Evening congestion", "text": "Bandwidth dips on South Beach after 8pm.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Dropped calls", "text": "Call reliability around Wynwood needs work.", "rating": 2, "sentiment": "negative", "date": "2025-11-03" },
-                { "title": "Confusing charges", "text": "Promo didn’t match first bill; resolved after support call.", "rating": 1, "sentiment": "negative", "date": "2025-10-21" },
-                { "title": "Average experience", "text": "Store was busy; wait reasonable; checkout fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "It works", "text": "Service is okay—some latency on highways.", "rating": 3, "sentiment": "neutral", "date": "2025-10-12" },
-                { "title": "Mixed results", "text": "Great downtown, weaker near my apartment.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Tampa",
-          "stores": [
-            {
-              "store_id": "FL-TAM-003",
-              "store_name": "T-Mobile Tampa Store",
-              "address": "5100 Kennedy Blvd, Tampa, FL 33609",
-              "city": "Tampa",
-              "state": "Florida",
-              "reviews": [
-                { "title": "Great coverage", "text": "No dead zones on my commute to St. Pete.", "rating": 5, "sentiment": "positive", "date": "2025-11-02" },
-                { "title": "Quick setup", "text": "In and out in 25 minutes. Friendly staff.", "rating": 5, "sentiment": "positive", "date": "2025-10-18" },
-                { "title": "Fast downloads", "text": "Games update in minutes—nice bandwidth.", "rating": 4, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Solid reliability", "text": "Uptime has been steady for weeks.", "rating": 4, "sentiment": "positive", "date": "2025-10-23" },
-                { "title": "Lag at stadium", "text": "Latency spiked after the game, couldn’t upload photos.", "rating": 2, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Outage one evening", "text": "Lost signal for an hour; back to normal after.", "rating": 2, "sentiment": "negative", "date": "2025-10-30" },
-                { "title": "Billing hiccup", "text": "Trade-in credit posted late.", "rating": 2, "sentiment": "negative", "date": "2025-11-05" },
-                { "title": "Average visit", "text": "Got accessories; checkout took a bit.", "rating": 3, "sentiment": "neutral", "date": "2025-10-20" },
-                { "title": "Okay speed", "text": "Most apps fine; hotspot slower than expected.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "As expected; nothing remarkable.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Orlando",
-          "stores": [
-            {
-              "store_id": "FL-ORL-004",
-              "store_name": "T-Mobile Orlando Store",
-              "address": "2211 Orange Ave, Orlando, FL 32801",
-              "city": "Orlando",
-              "state": "Florida",
-              "reviews": [
-                { "title": "Smooth upgrade", "text": "Rep was knowledgeable and efficient.", "rating": 5, "sentiment": "positive", "date": "2025-11-01" },
-                { "title": "Good indoor coverage", "text": "Signal held inside the mall.", "rating": 4, "sentiment": "positive", "date": "2025-10-26" },
-                { "title": "Fast 5G", "text": "Streaming 4K without buffering.", "rating": 4, "sentiment": "positive", "date": "2025-10-15" },
-                { "title": "Reliable calls", "text": "No dropped calls this month.", "rating": 5, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Congestion at night", "text": "Throughput slows after 9pm near my place.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Latency during rideshare", "text": "Maps lagged while driving airport runs.", "rating": 2, "sentiment": "negative", "date": "2025-11-03" },
-                { "title": "Unexpected fee", "text": "Activation fee wasn’t clear initially.", "rating": 1, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Average experience", "text": "Queue moved; staff fine; service okay.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Okay coverage", "text": "Theme parks good; some dead zones on outskirts.", "rating": 3, "sentiment": "neutral", "date": "2025-10-19" },
-                { "title": "It works", "text": "Nothing fancy; gets the job done.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "St. Petersburg",
-          "stores": [
-            {
-              "store_id": "FL-STP-005",
-              "store_name": "T-Mobile St. Petersburg Store",
-              "address": "900 Central Ave, St. Petersburg, FL 33701",
-              "city": "St. Petersburg",
-              "state": "Florida",
-              "reviews": [
-                { "title": "Great staff", "text": "Friendly team handled my line add fast.", "rating": 5, "sentiment": "positive", "date": "2025-10-22" },
-                { "title": "Strong signal", "text": "Coverage along the waterfront was solid.", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Fast uploads", "text": "Photos posted quickly; good upstream bandwidth.", "rating": 4, "sentiment": "positive", "date": "2025-10-17" },
-                { "title": "No drops this week", "text": "Reliability has improved lately.", "rating": 5, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Evening lag", "text": "Latency creeps up during events.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Coverage gap", "text": "Dead zone near my apartment’s garage.", "rating": 2, "sentiment": "negative", "date": "2025-10-29" },
-                { "title": "Billing delay", "text": "Promo credit posted a cycle late.", "rating": 2, "sentiment": "negative", "date": "2025-10-26" },
-                { "title": "Average visit", "text": "Typical store trip; checkout okay.", "rating": 3, "sentiment": "neutral", "date": "2025-10-20" },
-                { "title": "It works", "text": "Service is fine for daily use.", "rating": 3, "sentiment": "neutral", "date": "2025-11-07" },
-                { "title": "Standard service", "text": "As expected.", "rating": 3, "sentiment": "neutral", "date": "2025-10-13" }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    {
-      "state": "New York",
-      "cities": [
-        {
-          "city": "New York",
-          "stores": [
-            {
-              "store_id": "NY-NYC-001",
-              "store_name": "T-Mobile New York Store",
-              "address": "11 Broadway, New York, NY 10004",
-              "city": "New York",
-              "state": "New York",
-              "reviews": [
-                { "title": "Ultra-fast 5G", "text": "Downloads are instant—great bandwidth in Midtown.", "rating": 5, "sentiment": "positive", "date": "2025-11-06" },
-                { "title": "Reliable subway coverage", "text": "Calls held through most stations.", "rating": 4, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Knowledgeable reps", "text": "Clear plan explanation and quick checkout.", "rating": 5, "sentiment": "positive", "date": "2025-11-02" },
-                { "title": "Strong indoors", "text": "Office building signal steady all day.", "rating": 4, "sentiment": "positive", "date": "2025-10-26" },
-                { "title": "Night congestion", "text": "Throughput dips near Times Square at night.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Latency bursts", "text": "Ping spikes during lunch rush.", "rating": 2, "sentiment": "negative", "date": "2025-11-04" },
-                { "title": "Billing surprise", "text": "Activation fee wasn’t obvious.", "rating": 1, "sentiment": "negative", "date": "2025-10-15" },
-                { "title": "Average visit", "text": "Busy store; line moved okay.", "rating": 3, "sentiment": "neutral", "date": "2025-11-05" },
-                { "title": "Okay coverage", "text": "A couple dead zones in my walk-up.", "rating": 3, "sentiment": "neutral", "date": "2025-10-17" },
-                { "title": "Standard service", "text": "Met expectations.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Buffalo",
-          "stores": [
-            {
-              "store_id": "NY-BUF-002",
-              "store_name": "T-Mobile Buffalo Store",
-              "address": "400 Main St, Buffalo, NY 14202",
-              "city": "Buffalo",
-              "state": "New York",
-              "reviews": [
-                { "title": "Great reliability", "text": "Uptime has been rock solid.", "rating": 5, "sentiment": "positive", "date": "2025-10-22" },
-                { "title": "Fast uploads", "text": "Photos and videos post quickly.", "rating": 4, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Helpful team", "text": "Quick eSIM transfer.", "rating": 4, "sentiment": "positive", "date": "2025-11-07" },
-                { "title": "Good coverage", "text": "Signal stays strong near the stadium.", "rating": 5, "sentiment": "positive", "date": "2025-10-19" },
-                { "title": "Evening slowdowns", "text": "Bandwidth drops after 7pm.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Dropped calls", "text": "Lost a couple calls this week.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Fee confusion", "text": "Promo credit timing unclear.", "rating": 2, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Average experience", "text": "Serviceable; nothing special.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Okay for maps", "text": "Latency fine for navigation.", "rating": 3, "sentiment": "neutral", "date": "2025-10-14" },
-                { "title": "Standard service", "text": "Met expectations.", "rating": 3, "sentiment": "neutral", "date": "2025-10-30" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Rochester",
-          "stores": [
-            {
-              "store_id": "NY-ROC-003",
-              "store_name": "T-Mobile Rochester Store",
-              "address": "99 East Ave, Rochester, NY 14604",
-              "city": "Rochester",
-              "state": "New York",
-              "reviews": [
-                { "title": "Quick upgrade", "text": "Staff moved everything from my old phone.", "rating": 5, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Reliable indoors", "text": "Office coverage is steady.", "rating": 4, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Fast 5G", "text": "Downloads finish quickly.", "rating": 4, "sentiment": "positive", "date": "2025-10-18" },
-                { "title": "Good customer service", "text": "Friendly and patient staff.", "rating": 5, "sentiment": "positive", "date": "2025-11-08" },
-                { "title": "Latency blips", "text": "Ping spikes near campus at night.", "rating": 2, "sentiment": "negative", "date": "2025-10-29" },
-                { "title": "Coverage gap", "text": "Dead spot in my apartment garage.", "rating": 2, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Billing delay", "text": "Credit arrived a cycle late.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Average visit", "text": "Line moved; checkout okay.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "It works", "text": "Calls and texts fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "As expected.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Yonkers",
-          "stores": [
-            {
-              "store_id": "NY-YON-004",
-              "store_name": "T-Mobile Yonkers Store",
-              "address": "200 Ridge Hill Blvd, Yonkers, NY 10710",
-              "city": "Yonkers",
-              "state": "New York",
-              "reviews": [
-                { "title": "Strong coverage", "text": "No drops across my daily route.", "rating": 5, "sentiment": "positive", "date": "2025-10-20" },
-                { "title": "Helpful reps", "text": "Explained plan clearly.", "rating": 4, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Good speeds", "text": "Uploads are quick for photos.", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Reliable calls", "text": "No call drops this week.", "rating": 5, "sentiment": "positive", "date": "2025-10-26" },
-                { "title": "Evening congestion", "text": "Bandwidth slower after 8pm.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Latency spikes", "text": "Navigation lagged at intersections.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Confusing bill", "text": "Taxes/fees weren’t clear initially.", "rating": 2, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Average experience", "text": "Store was fine; wait moderate.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" },
-                { "title": "Okay coverage", "text": "Garage level 2 has weak signal.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "Did what I needed.", "rating": 3, "sentiment": "neutral", "date": "2025-10-15" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Syracuse",
-          "stores": [
-            {
-              "store_id": "NY-SYR-005",
-              "store_name": "T-Mobile Syracuse Store",
-              "address": "300 Warren St, Syracuse, NY 13202",
-              "city": "Syracuse",
-              "state": "New York",
-              "reviews": [
-                { "title": "Great reliability", "text": "Uptime steady through storms.", "rating": 5, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Fast 5G", "text": "Streaming 4K without hiccups.", "rating": 4, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Good staff", "text": "Polite and efficient.", "rating": 4, "sentiment": "positive", "date": "2025-10-19" },
-                { "title": "Coverage improved", "text": "Fewer dead zones than last year.", "rating": 5, "sentiment": "positive", "date": "2025-11-07" },
-                { "title": "Bandwidth dips", "text": "Evening slowdown by the dome.", "rating": 2, "sentiment": "negative", "date": "2025-10-30" },
-                { "title": "Dropped calls", "text": "Lost a call driving home.", "rating": 2, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Billing delay", "text": "Discount applied late.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Average visit", "text": "Got a case; checkout fine.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "It works", "text": "Daily use is fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "Meets expectations.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    {
-      "state": "Illinois",
-      "cities": [
-        {
-          "city": "Chicago",
-          "stores": [
-            {
-              "store_id": "IL-CHI-001",
-              "store_name": "T-Mobile Chicago Store",
-              "address": "233 W Lake St, Chicago, IL 60601",
-              "city": "Chicago",
-              "state": "Illinois",
-              "reviews": [
-                { "title": "Blazing 5G downtown", "text": "Throughput and reliability both excellent.", "rating": 5, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Helpful staff", "text": "Trade-in was smooth and quick.", "rating": 4, "sentiment": "positive", "date": "2025-10-20" },
-                { "title": "Strong coverage", "text": "Few, if any, dead zones on the L.", "rating": 4, "sentiment": "positive", "date": "2025-10-29" },
-                { "title": "Solid reliability", "text": "No drops during long calls.", "rating": 5, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Rush hour lag", "text": "Latency spikes along the Kennedy.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Evening congestion", "text": "Bandwidth dips after concerts.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Billing confusion", "text": "Fee labels weren’t clear.", "rating": 1, "sentiment": "negative", "date": "2025-10-15" },
-                { "title": "Average visit", "text": "Line moved; checkout fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Okay coverage", "text": "Garage levels have weak signal.", "rating": 3, "sentiment": "neutral", "date": "2025-10-18" },
-                { "title": "Standard service", "text": "As expected.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Aurora",
-          "stores": [
-            {
-              "store_id": "IL-AUR-002",
-              "store_name": "T-Mobile Aurora Store",
-              "address": "100 Fox Valley Center, Aurora, IL 60504",
-              "city": "Aurora",
-              "state": "Illinois",
-              "reviews": [
-                { "title": "Great reliability", "text": "Calls and data steady all day.", "rating": 5, "sentiment": "positive", "date": "2025-10-22" },
-                { "title": "Fast uploads", "text": "Photos post quickly.", "rating": 4, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Friendly team", "text": "Rep set up my hotspot in minutes.", "rating": 4, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Good coverage", "text": "Signal stayed strong driving home.", "rating": 5, "sentiment": "positive", "date": "2025-10-19" },
-                { "title": "Evening slowdowns", "text": "Bandwidth dips around the mall.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Latency spikes", "text": "Ping jumps during rush hour.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Promo credit timing", "text": "Took a cycle to appear.", "rating": 2, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Average experience", "text": "Service okay; wait moderate.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "It works", "text": "Daily use fine.", "rating": 3, "sentiment": "neutral", "date": "2025-10-14" },
-                { "title": "Standard service", "text": "Exactly what I expected.", "rating": 3, "sentiment": "neutral", "date": "2025-10-30" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Naperville",
-          "stores": [
-            {
-              "store_id": "IL-NAP-003",
-              "store_name": "T-Mobile Naperville Store",
-              "address": "50 Jefferson Ave, Naperville, IL 60540",
-              "city": "Naperville",
-              "state": "Illinois",
-              "reviews": [
-                { "title": "Quick upgrade", "text": "Phone swap and eSIM took 10 minutes.", "rating": 5, "sentiment": "positive", "date": "2025-10-25" },
-                { "title": "Good reliability", "text": "No drops in my neighborhood.", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Fast data", "text": "Apps load instantly.", "rating": 4, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Helpful staff", "text": "Explained plan options well.", "rating": 5, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Latency blips", "text": "Ping jumps near school pickup.", "rating": 2, "sentiment": "negative", "date": "2025-10-29" },
-                { "title": "Coverage gap", "text": "Dead spot in underground parking.", "rating": 2, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Billing delay", "text": "Trade-in credit applied late.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Average visit", "text": "Line moved; checkout okay.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "Okay coverage", "text": "Most places fine; hotspot slower at night.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "Meets expectations.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Joliet",
-          "stores": [
-            {
-              "store_id": "IL-JOL-004",
-              "store_name": "T-Mobile Joliet Store",
-              "address": "2410 Plainfield Rd, Joliet, IL 60435",
-              "city": "Joliet",
-              "state": "Illinois",
-              "reviews": [
-                { "title": "Reliable calls", "text": "No drops on my route.", "rating": 5, "sentiment": "positive", "date": "2025-10-20" },
-                { "title": "Good coverage", "text": "Signal solid at home and work.", "rating": 4, "sentiment": "positive", "date": "2025-11-03" },
-                { "title": "Fast downloads", "text": "Updates finished quickly.", "rating": 4, "sentiment": "positive", "date": "2025-11-05" },
-                { "title": "Helpful staff", "text": "Friendly and efficient.", "rating": 5, "sentiment": "positive", "date": "2025-10-26" },
-                { "title": "Evening congestion", "text": "Throughput slower after 7pm.", "rating": 2, "sentiment": "negative", "date": "2025-10-28" },
-                { "title": "Latency spikes", "text": "Maps lagged at intersections.", "rating": 2, "sentiment": "negative", "date": "2025-11-01" },
-                { "title": "Confusing bill", "text": "Fees weren’t clear upfront.", "rating": 2, "sentiment": "negative", "date": "2025-10-24" },
-                { "title": "Average experience", "text": "Store fine; wait moderate.", "rating": 3, "sentiment": "neutral", "date": "2025-10-31" },
-                { "title": "It works", "text": "Daily use is fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "As expected.", "rating": 3, "sentiment": "neutral", "date": "2025-10-15" }
-              ]
-            }
-          ]
-        },
-        {
-          "city": "Rockford",
-          "stores": [
-            {
-              "store_id": "IL-ROC-005",
-              "store_name": "T-Mobile Rockford Store",
-              "address": "555 State St, Rockford, IL 61104",
-              "city": "Rockford",
-              "state": "Illinois",
-              "reviews": [
-                { "title": "Great reliability", "text": "Signal steady through the week.", "rating": 5, "sentiment": "positive", "date": "2025-11-04" },
-                { "title": "Fast 5G", "text": "Streaming smooth.", "rating": 4, "sentiment": "positive", "date": "2025-10-21" },
-                { "title": "Good staff", "text": "Polite and quick.", "rating": 4, "sentiment": "positive", "date": "2025-10-19" },
-                { "title": "Coverage improved", "text": "Fewer dead zones than before.", "rating": 5, "sentiment": "positive", "date": "2025-11-07" },
-                { "title": "Bandwidth dips", "text": "Evening slowdown near downtown.", "rating": 2, "sentiment": "negative", "date": "2025-10-30" },
-                { "title": "Dropped calls", "text": "Lost one call driving home.", "rating": 2, "sentiment": "negative", "date": "2025-10-27" },
-                { "title": "Billing delay", "text": "Discount applied late.", "rating": 2, "sentiment": "negative", "date": "2025-11-02" },
-                { "title": "Average visit", "text": "Got a case; checkout fine.", "rating": 3, "sentiment": "neutral", "date": "2025-10-23" },
-                { "title": "It works", "text": "Daily use is fine.", "rating": 3, "sentiment": "neutral", "date": "2025-11-06" },
-                { "title": "Standard service", "text": "Meets expectations.", "rating": 3, "sentiment": "neutral", "date": "2025-10-16" }
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 5,
+                  "sentiment": "positive",
+                  "date": "2025-11-06"
+                },
+                {
+                  "title": "Reliable network",
+                  "text": "No dropped calls, stable connection throughout the day.",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-18"
+                },
+                {
+                  "title": "Amazing 5G speeds!",
+                  "text": "T-Mobile's 5G is incredibly fast. Downloaded a movie in seconds!",
+                  "rating": 4,
+                  "sentiment": "positive",
+                  "date": "2025-10-10"
+                },
+                {
+                  "title": "Terrible coverage",
+                  "text": "Dead zones everywhere. Can't even load basic websites.",
+                  "rating": 1,
+                  "sentiment": "negative",
+                  "date": "2025-10-31"
+                },
+                {
+                  "title": "Billing issues",
+                  "text": "Charged extra fees that weren't explained. Bill is confusing.",
+                  "rating": 2,
+                  "sentiment": "negative",
+                  "date": "2025-11-09"
+                },
+                {
+                  "title": "Okay coverage",
+                  "text": "Coverage is decent in most areas, spotty in some.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-30"
+                },
+                {
+                  "title": "Average experience",
+                  "text": "Nothing special. Service works but nothing to write home about.",
+                  "rating": 3,
+                  "sentiment": "neutral",
+                  "date": "2025-10-16"
+                }
               ]
             }
           ]

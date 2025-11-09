@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Ana - T-Mobile Sentiment Analysis</title>
 
-    <!-- Favicon (uses the same logo file) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/logo.png') }}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='project_ana.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-
- <div class="container">
+<div class="container">
+    <!-- Header -->
     <header class="header">
         <div class="header-logo-row">
             <img class="logo" src="{{ url_for('static', filename='imgs/logo.png') }}" alt="Project Ana Logo">
@@ -24,518 +24,633 @@
         </div>
     </header>
 
-        <div class="main-layout">
-            <!-- Left: Chat Interface (Text Message Style) -->
-            <div class="chat-panel">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="chat-header-content">
-                            <div class="bot-avatar">🤖</div>
-                            <div>
-                                <h2>Ana AI Assistant</h2>
-                                <p class="status">● Online</p>
-                            </div>
+    <div class="main-layout">
+        <!-- Left: Chat Interface -->
+        <div class="chat-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="chat-header-content">
+                        <div class="bot-avatar"><img src="{{ url_for('static', filename='imgs/iconAI.png') }}" alt="Ana AI Icon"></div>
+                        <div>
+                            <h2>Ana AI Assistant</h2>
+                            <p class="status">● Online</p>
                         </div>
-                    </div>
-                    
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="date-divider">Today</div>
-                        <div class="message-bubble bot">
-                            <div class="bubble-content">
-                                <p>Hi! I'm Ana, your T-Mobile data analyst 👋</p>
-                                <p>Loading your data now...</p>
-                            </div>
-                            <div class="message-time">Just now</div>
-                        </div>
-                    </div>
-
-                    <div class="chat-input-area">
-                        <input 
-                            type="text" 
-                            id="chatInput" 
-                            class="message-input" 
-                            placeholder="Message Ana..."
-                            onkeypress="if(event.key==='Enter') sendMessage()"
-                        >
-                        <button class="send-btn" onclick="sendMessage()">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                            </svg>
-                        </button>
                     </div>
                 </div>
 
-                <!-- Quick Action Buttons -->
-                <div class="quick-actions">
-                    <button class="quick-btn" onclick="quickPrompt('What do users like?')">
-                        👍 What users like
-                    </button>
-                    <button class="quick-btn" onclick="quickPrompt('Top 5 places with best reviews')">
-                        🏆 Top locations
-                    </button>
-                    <button class="quick-btn" onclick="quickPrompt('Main complaints')">
-                        ⚠️ Complaints
-                    </button>
-                    <button class="quick-btn" onclick="quickPrompt('Generate full report')">
-                        📊 Full report
+                <div class="chat-messages" id="chatMessages">
+                    <div class="date-divider">Today</div>
+                    <div class="message-bubble bot">
+                        <div class="bubble-content">
+                            <p>Hi! I'm Ana, your T-Mobile data analyst 👋</p>
+                            <p>Loading your data now...</p>
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input
+                        type="text"
+                        id="chatInput"
+                        class="message-input"
+                        placeholder="Message Ana..."
+                        onkeypress="if(event.key==='Enter') sendMessage()"
+                    >
+                    <button class="send-btn" onclick="sendMessage()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                        </svg>
                     </button>
                 </div>
             </div>
 
-            <!-- Right: Dynamic Data Visualizations -->
-            <div class="data-panel">
-                <div id="dataDashboard" class="dashboard-content">
-                    <div class="welcome-card">
-                        <div class="welcome-icon">📊</div>
-                        <h3>Welcome to Project Ana</h3>
-                        <p>Data is loading... Ask Ana a question to see insights!</p>
-                    </div>
+            <!-- Quick Action Buttons -->
+            <div class="quick-actions">
+                <button class="quick-btn" onclick="quickPrompt('What do users like?')">
+                    👍 What users like
+                </button>
+                <button class="quick-btn" onclick="quickPrompt('Top 5 places with best reviews')">
+                    🏆 Top locations
+                </button>
+                <button class="quick-btn" onclick="quickPrompt('Main complaints')">
+                    ⚠️ Complaints
+                </button>
+                <button class="quick-btn" onclick="quickPrompt('Generate full report')">
+                    📊 Full report
+                </button>
+                <button class="quick-btn" onclick="quickPrompt('Show me insights about T-Mobile Tuesdays')">
+                    🎁 T-Mobile Tuesdays
+                </button>
+            </div>
+        </div>
+
+        <!-- Right: Dashboard -->
+        <div class="data-panel">
+            <div id="dataDashboard" class="dashboard-content">
+                <div class="welcome-card">
+                    <div class="welcome-icon">📊</div>
+                    <h3>Welcome to Project Ana</h3>
+                    <p>Data is loading... Ask Ana a question to see insights!</p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        const API_URL = 'http://127.0.0.1:5000';
-        let currentData = null;
-        let conversationHistory = [];
+<script>
+    const API_URL = 'http://127.0.0.1:5000';
+    let currentData = null;
 
-        // Auto-load data
-        async function loadData() {
-            try {
-                const response = await fetch(`${API_URL}/load_and_analyze`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                const data = await response.json();
-                
-                if (data.error) {
-                    addBotMessage("Sorry, couldn't load data: " + data.error);
-                    return;
-                }
+    // ==========================
+    // Data Loading
+    // ==========================
+    async function loadData() {
+        try {
+            const response = await fetch(`${API_URL}/load_and_analyze`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
 
-                data.results = data.results.slice(0, 100);
-                currentData = data;
-                
-                addBotMessage(`✅ Data loaded! I analyzed ${data.summary.total_comments} reviews. What would you like to know?`);
-                showInitialDashboard();
-            } catch (error) {
-                addBotMessage("Error loading data: " + error.message);
-            }
-        }
-
-        // Send message
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            if (!currentData) {
-                addBotMessage("Please wait while I load the data...");
+            if (data.error) {
+                addBotMessage("Sorry, couldn't load data: " + data.error);
                 return;
             }
 
-            input.value = '';
-            addUserMessage(message);
+            data.results = data.results.slice(0, 100);
+            currentData = data;
 
-            // Show typing indicator
-            showTypingIndicator();
-
-            try {
-                const response = await fetch(`${API_URL}/chat`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message: message,
-                        use_latest_data: true
-                    })
-                });
-
-                const data = await response.json();
-                
-                removeTypingIndicator();
-                addBotMessage(data.response);
-                
-                // Update visualizations based on question
-                updateVisualization(message);
-
-            } catch (error) {
-                removeTypingIndicator();
-                addBotMessage("Sorry, I encountered an error: " + error.message);
-            }
+            addBotMessage(`✅ Data loaded! I analyzed ${data.summary.total_comments} reviews. What would you like to know?`);
+            showInitialDashboard();
+        } catch (error) {
+            addBotMessage("Error loading data: " + error.message);
         }
-
-        // Quick prompt
-        function quickPrompt(prompt) {
-            document.getElementById('chatInput').value = prompt;
-            sendMessage();
-        }
-
-        // Add user message
-        function addUserMessage(text) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message-bubble user';
-            messageDiv.innerHTML = `
-                <div class="bubble-content">${text}</div>
-                <div class="message-time">${time}</div>
-            `;
-            
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Add bot message
-        function addBotMessage(text) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            // Format text with markdown-like styling
-            const formattedText = formatBotMessage(text);
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message-bubble bot';
-            messageDiv.innerHTML = `
-                <div class="bubble-content">${formattedText}</div>
-                <div class="message-time">${time}</div>
-            `;
-            
-            messagesDiv.appendChild(messageDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        // Format bot message
-        function formatBotMessage(text) {
-            // Bold text between **
-            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            // Lists
-            text = text.replace(/^\*   (.*?)$/gm, '<li>$1</li>');
-            text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
-            // Line breaks
-            text = text.replace(/\n/g, '<br>');
-            return text;
-        }
-
-        // Typing indicator
-        function showTypingIndicator() {
-            const messagesDiv = document.getElementById('chatMessages');
-            const typingDiv = document.createElement('div');
-            typingDiv.className = 'message-bubble bot typing';
-            typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <div class="bubble-content">
-                    <div class="typing-dots">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>
-            `;
-            messagesDiv.appendChild(typingDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-        function removeTypingIndicator() {
-            const typing = document.getElementById('typingIndicator');
-            if (typing) typing.remove();
-        }
-
-        // Update visualization based on query
-        function updateVisualization(query) {
-            const dashboard = document.getElementById('dataDashboard');
-            const lowerQuery = query.toLowerCase();
-
-            if (lowerQuery.includes('what') && lowerQuery.includes('like')) {
-                showPositiveReviews();
-            } else if (lowerQuery.includes('top') || lowerQuery.includes('best')) {
-                showTopLocations();
-            } else if (lowerQuery.includes('complaint') || lowerQuery.includes('issue') || lowerQuery.includes('problem')) {
-                showNegativeReviews();
-            } else if (lowerQuery.includes('report') || lowerQuery.includes('overview')) {
-                showFullReport();
-            } else {
-                showSentimentOverview();
-            }
-        }
-
-        // Show initial dashboard
-        function showInitialDashboard() {
-            if (!currentData) return;
-            
-            const summary = currentData.summary;
-            const labels = summary.label_distribution || {};
-            const positive = (labels.positive || 0) + (labels['slightly positive'] || 0);
-            const negative = (labels.negative || 0) + (labels['slightly negative'] || 0);
-            const neutral = labels.neutral || 0;
-
-            const dashboard = document.getElementById('dataDashboard');
-            dashboard.innerHTML = `
-                <div class="stats-overview">
-                    <div class="stat-card positive">
-                        <div class="stat-value">${positive}</div>
-                        <div class="stat-label">Positive Reviews</div>
-                    </div>
-                    <div class="stat-card negative">
-                        <div class="stat-value">${negative}</div>
-                        <div class="stat-label">Negative Reviews</div>
-                    </div>
-                    <div class="stat-card neutral">
-                        <div class="stat-value">${neutral}</div>
-                        <div class="stat-label">Neutral Reviews</div>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Sentiment Distribution</h3>
-                    <canvas id="mainChart"></canvas>
-                </div>
-            `;
-
-            createDoughnutChart(positive, negative, neutral);
-        }
-        // ===== Theme Chips Helpers =====
-
-function extractThemes(results, type) {
-    // Simple keyword-based themes grounded in the data
-    const positiveConfig = [
-        { label: "Friendly staff", keywords: ["friendly", "helpful", "kind", "nice", "staff"] },
-        { label: "Fast service", keywords: ["quick", "fast", "efficient", "speed"] },
-        { label: "Clean stores", keywords: ["clean", "tidy", "organized"] },
-        { label: "Good deals & promos", keywords: ["deal", "promotion", "promo", "discount", "offer"] },
-        { label: "Network performance", keywords: ["coverage", "signal", "5g", "speed"] }
-    ];
-
-    const negativeConfig = [
-        { label: "Long wait times", keywords: ["wait", "waiting", "line", "queue"] },
-        { label: "Billing issues", keywords: ["bill", "billing", "charge", "charged", "fees"] },
-        { label: "Rude staff", keywords: ["rude", "unprofessional", "attitude"] },
-        { label: "Poor coverage", keywords: ["coverage", "no service", "dropped", "signal"] },
-        { label: "Device / repair problems", keywords: ["repair", "device", "phone issue"] }
-    ];
-
-    const config = type === "positive" ? positiveConfig : negativeConfig;
-    const textField = r => (r.full_text || r.text || "").toLowerCase();
-
-    const scores = config.map(theme => {
-        let count = 0;
-        for (const r of results) {
-            const t = textField(r);
-            if (!t) continue;
-            if (theme.keywords.some(k => t.includes(k))) count++;
-        }
-        return { label: theme.label, count };
-    }).filter(t => t.count > 0);
-
-    scores.sort((a, b) => b.count - a.count);
-    return scores.slice(0, 5); // top 5
-}
-
-function renderThemeChips(container, themes, type) {
-    if (!container || !themes.length) {
-        if (container) container.innerHTML = "";
-        return;
     }
 
-    const cls = type === "positive" ? "positive" : "negative";
-    container.innerHTML = themes.map(t => `
-        <div class="theme-chip ${cls}">
-            <span class="dot"></span>
-            <span>${t.label}</span>
-        </div>
-    `).join("");
-}
+    // ==========================
+    // Chat Handling
+    // ==========================
+    async function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const message = input.value.trim();
 
+        if (!message) return;
+        if (!currentData) {
+            addBotMessage("Please wait while I load the data...");
+            return;
+        }
 
-       function showPositiveReviews() {
-    const results = currentData.results.filter(r => r.sentiment_label.includes('positive'));
-    const top = results.slice(0, 6);
-    const themes = extractThemes(results, "positive");
+        input.value = '';
+        addUserMessage(message);
+        showTypingIndicator();
 
-    const dashboard = document.getElementById('dataDashboard');
-    dashboard.innerHTML = `
-        <h3 class="section-title">😊 What Users Love</h3>
-        <div class="theme-chips" id="themeChipsPositive"></div>
-        <div class="reviews-grid">
-            ${top.map(r => `
-                <div class="review-card positive">
-                    <div class="review-stars">${'⭐'.repeat(5)}</div>
-                    <p class="review-text">${r.full_text.substring(0, 150)}...</p>
-                    <div class="review-meta">
-                        <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
-                        <span class="score-badge">${r.sentiment_score.toFixed(1)}/5</span>
-                    </div>
-                </div>
-            `).join('')}
-        </div>
-    `;
-
-    const chipContainer = document.getElementById('themeChipsPositive');
-    renderThemeChips(chipContainer, themes, "positive");
-}
-
-
-        // Show top locations
-        function showTopLocations() {
-            const locationMap = {};
-            currentData.results.forEach(r => {
-                if (!r.city) return;
-                const key = `${r.city}, ${r.state}`;
-                if (!locationMap[key]) {
-                    locationMap[key] = { positive: 0, negative: 0, total: 0 };
-                }
-                locationMap[key].total++;
-                if (r.sentiment_label.includes('positive')) locationMap[key].positive++;
-                if (r.sentiment_label.includes('negative')) locationMap[key].negative++;
+        try {
+            const response = await fetch(`${API_URL}/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: message,
+                    use_latest_data: true
+                })
             });
 
-            const topLocations = Object.entries(locationMap)
-                .sort((a, b) => b[1].positive - a[1].positive)
-                .slice(0, 5);
+            const data = await response.json();
 
-            const dashboard = document.getElementById('dataDashboard');
-            dashboard.innerHTML = `
-                <h3 class="section-title">🏆 Top Performing Locations</h3>
-                <div class="leaderboard">
-                    ${topLocations.map(([location, stats], index) => `
-                        <div class="leaderboard-item">
-                            <div class="rank">${index + 1}</div>
-                            <div class="location-info">
-                                <div class="location-name">${location}</div>
-                                <div class="location-stats">
-                                    <span class="positive-count">✓ ${stats.positive} positive</span>
-                                    <span class="total-count">${stats.total} total reviews</span>
-                                </div>
+            removeTypingIndicator();
+            addBotMessage(data.response || "I couldn't get a response from the server.");
+
+            updateVisualization(message);
+        } catch (error) {
+            removeTypingIndicator();
+            addBotMessage("Sorry, I encountered an error: " + error.message);
+        }
+    }
+
+    function quickPrompt(prompt) {
+        const input = document.getElementById('chatInput');
+        input.value = prompt;
+        sendMessage();
+    }
+
+    function addUserMessage(text) {
+        const messagesDiv = document.getElementById('chatMessages');
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message-bubble user';
+        messageDiv.innerHTML = `
+            <div class="bubble-content">${text}</div>
+            <div class="message-time">${time}</div>
+        `;
+
+        messagesDiv.appendChild(messageDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function addBotMessage(text) {
+        const messagesDiv = document.getElementById('chatMessages');
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        const formattedText = formatBotMessage(text || "");
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message-bubble bot';
+        messageDiv.innerHTML = `
+            <div class="bubble-content">${formattedText}</div>
+            <div class="message-time">${time}</div>
+        `;
+
+        messagesDiv.appendChild(messageDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function formatBotMessage(text) {
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/^\*   (.*?)$/gm, '<li>$1</li>');
+        text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+        text = text.replace(/\n/g, '<br>');
+        return text;
+    }
+
+    function showTypingIndicator() {
+        const messagesDiv = document.getElementById('chatMessages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message-bubble bot typing';
+        typingDiv.id = 'typingIndicator';
+        typingDiv.innerHTML = `
+            <div class="bubble-content">
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        `;
+        messagesDiv.appendChild(typingDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    function removeTypingIndicator() {
+        const typing = document.getElementById('typingIndicator');
+        if (typing) typing.remove();
+    }
+
+    // ==========================
+    // Theme Chips Helpers
+    // ==========================
+    function extractThemes(results, type) {
+        const positiveConfig = [
+            { label: "Friendly staff", keywords: ["friendly", "helpful", "kind", "nice", "staff"] },
+            { label: "Fast service", keywords: ["quick", "fast", "efficient", "speed"] },
+            { label: "Clean stores", keywords: ["clean", "tidy", "organized"] },
+            { label: "Good deals & promos", keywords: ["deal", "promotion", "promo", "discount", "offer"] },
+            { label: "Network performance", keywords: ["coverage", "signal", "5g", "speed"] }
+        ];
+
+        const negativeConfig = [
+            { label: "Long wait times", keywords: ["wait", "waiting", "line", "queue"] },
+            { label: "Billing issues", keywords: ["bill", "billing", "charge", "charged", "fees"] },
+            { label: "Rude staff", keywords: ["rude", "unprofessional", "attitude"] },
+            { label: "Poor coverage", keywords: ["coverage", "no service", "dropped", "signal"] },
+            { label: "Device / repair problems", keywords: ["repair", "device", "phone issue"] }
+        ];
+
+        const config = type === "positive" ? positiveConfig : negativeConfig;
+        const textField = r => (r.full_text || r.text || "").toLowerCase();
+
+        const scores = config.map(theme => {
+            let count = 0;
+            for (const r of results) {
+                const t = textField(r);
+                if (!t) continue;
+                if (theme.keywords.some(k => t.includes(k))) count++;
+            }
+            return { label: theme.label, count };
+        }).filter(t => t.count > 0);
+
+        scores.sort((a, b) => b.count - a.count);
+        return scores.slice(0, 5);
+    }
+
+    function renderThemeChips(container, themes, type) {
+        if (!container || !themes.length) {
+            if (container) container.innerHTML = "";
+            return;
+        }
+
+        const cls = type === "positive" ? "positive" : "negative";
+        container.innerHTML = themes.map(t => `
+            <div class="theme-chip ${cls}">
+                <span class="dot"></span>
+                <span>${t.label}</span>
+            </div>
+        `).join("");
+    }
+
+    // ==========================
+    // T-Mobile Tuesdays Helpers
+    // ==========================
+    function getTuesdayMentions() {
+        if (!currentData || !currentData.results) return [];
+        return currentData.results.filter(r => {
+            const t = (r.full_text || r.text || "").toLowerCase();
+            return t.includes("t-mobile tuesday") ||
+                   t.includes("tmobile tuesday") ||
+                   t.includes("t-mobile tuesdays") ||
+                   t.includes("tmobile tuesdays");
+        });
+    }
+
+    function getTuesdayDealBreakdown() {
+        const tuesday = getTuesdayMentions();
+        if (!tuesday.length) return [];
+
+        const deals = [
+            { label: "Food & Snacks", keywords: ["pizza", "burger", "coffee", "dunkin", "panera", "wendys", "food", "snack", "meal"] },
+            { label: "Streaming & Subscriptions", keywords: ["netflix", "hulu", "paramount", "apple tv", "stream", "subscription", "music"] },
+            { label: "Travel & Hotels", keywords: ["hotel", "flight", "travel", "airline", "rental car", "lyft", "uber"] },
+            { label: "Gas & Fuel", keywords: ["gas", "fuel", "shell", "exxon"] },
+            { label: "Merch & Gift Cards", keywords: ["gift card", "merch", "shirt", "swag", "coupon", "voucher"] },
+            { label: "App Experience", keywords: ["app", "crash", "login", "redeem", "redeeming", "code"] }
+        ];
+
+        const scores = deals.map(d => {
+            let count = 0;
+            for (const r of tuesday) {
+                const t = (r.full_text || r.text || "").toLowerCase();
+                if (!t) continue;
+                if (d.keywords.some(k => t.includes(k))) count++;
+            }
+            return { label: d.label, count };
+        }).filter(d => d.count > 0);
+
+        scores.sort((a, b) => b.count - a.count);
+        const max = scores[0] ? scores[0].count : 1;
+
+        return scores.map(d => ({
+            ...d,
+            width: Math.max(10, (d.count / max) * 100)
+        })).slice(0, 5);
+    }
+
+    function renderTuesdayDealWidget(container) {
+        const stats = getTuesdayDealBreakdown();
+        if (!container) return;
+
+        if (!stats.length) {
+            container.innerHTML = `
+                <div class="tmotues-deals">
+                    <div class="tmotues-deals-title">🎁 T-Mobile Tuesdays Deals</div>
+                    <div class="tmotues-deals-sub">No clear deal-specific mentions detected in this dataset.</div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="tmotues-deals">
+                <div class="tmotues-deals-title">🎁 T-Mobile Tuesdays: Most Loved Deals</div>
+                <div class="tmotues-deals-sub">Based on mentions in recent posts & reviews.</div>
+                <div class="tmotues-deal-list">
+                    ${stats.map((d, i) => `
+                        <div class="tmotues-deal-item">
+                            <div class="tmotues-rank">${i + 1}</div>
+                            <div class="tmotues-deal-label">${d.label}</div>
+                            <div class="tmotues-deal-bar-wrap">
+                                <div class="tmotues-deal-bar" style="width:${d.width}%;"></div>
                             </div>
-                            <div class="score-percent">${((stats.positive / stats.total) * 100).toFixed(0)}%</div>
+                            <div class="tmotues-deal-count">${d.count}</div>
                         </div>
                     `).join('')}
                 </div>
+            </div>
+        `;
+    }
+
+    function showTuesdayInsights() {
+        const results = getTuesdayMentions();
+        const dashboard = document.getElementById('dataDashboard');
+
+        if (!results.length) {
+            dashboard.innerHTML = `
+                <h3 class="section-title">🎁 T-Mobile Tuesdays Insights</h3>
+                <p class="section-sub">No specific mentions of T-Mobile Tuesdays found in the current dataset.</p>
             `;
+            return;
         }
 
-        // Show negative reviews
-        function showNegativeReviews() {
-    const results = currentData.results.filter(r => r.sentiment_label.includes('negative'));
-    const top = results.slice(0, 6);
-    const themes = extractThemes(results, "negative");
+        const pos = results.filter(r => (r.sentiment_label || '').toLowerCase().includes('positive')).length;
+        const total = results.length;
+        const posRate = Math.round((pos / total) * 100);
 
-    const dashboard = document.getElementById('dataDashboard');
-    dashboard.innerHTML = `
-        <h3 class="section-title">⚠️ Issues to Address</h3>
-        <div class="theme-chips" id="themeChipsNegative"></div>
-        <div class="issues-list">
-            ${top.map(r => `
-                <div class="issue-item">
-                    <div class="issue-severity">High Priority</div>
-                    <p class="issue-text">${r.full_text.substring(0, 200)}...</p>
-                    <div class="issue-meta">
-                        <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
-                        <span class="score-badge negative">${r.sentiment_score.toFixed(1)}/5</span>
+        dashboard.innerHTML = `
+            <h3 class="section-title">🎁 T-Mobile Tuesdays Insights</h3>
+            <p class="section-sub">${total} mentions detected. ${posRate}% are positive.</p>
+            <div id="tmotuesDealWidget"></div>
+            <div class="issues-list">
+                ${results.slice(0, 5).map(r => `
+                    <div class="issue-item">
+                        <p class="issue-text">${(r.full_text || r.text || "").substring(0, 180)}...</p>
+                        <div class="issue-meta">
+                            <span>${(r.sentiment_label || 'N/A').toUpperCase()}</span>
+                            <span>${r.date || ''}</span>
+                        </div>
                     </div>
-                </div>
-            `).join('')}
-        </div>
-    `;
+                `).join('')}
+            </div>
+        `;
 
-    const chipContainer = document.getElementById('themeChipsNegative');
-    renderThemeChips(chipContainer, themes, "negative");
-}
+        renderTuesdayDealWidget(document.getElementById('tmotuesDealWidget'));
+    }
 
+    // ==========================
+    // Visualization Router
+    // ==========================
+    function updateVisualization(query) {
+        const lower = query.toLowerCase();
 
-        // Show full report
-        function showFullReport() {
+        if (lower.includes('t-mobile tuesday') || lower.includes('tmobile tuesday')) {
+            showTuesdayInsights();
+        } else if (lower.includes('what') && lower.includes('like')) {
+            showPositiveReviews();
+        } else if (lower.includes('top') || lower.includes('best')) {
+            showTopLocations();
+        } else if (lower.includes('complaint') || lower.includes('issue') || lower.includes('problem')) {
+            showNegativeReviews();
+        } else if (lower.includes('report') || lower.includes('overview')) {
+            showFullReport();
+        } else {
             showSentimentOverview();
         }
+    }
 
-        // Show sentiment overview
-        function showSentimentOverview() {
-            const summary = currentData.summary;
-            const labels = summary.label_distribution || {};
-            const positive = (labels.positive || 0) + (labels['slightly positive'] || 0);
-            const negative = (labels.negative || 0) + (labels['slightly negative'] || 0);
-            const neutral = labels.neutral || 0;
-            const total = summary.total_comments;
+    // ==========================
+    // Dashboard Views
+    // ==========================
+    function showInitialDashboard() {
+        if (!currentData) return;
 
-            const dashboard = document.getElementById('dataDashboard');
-            dashboard.innerHTML = `
-                <div class="report-overview">
-                    <h3 class="section-title">📊 Sentiment Overview</h3>
-                    <div class="stats-grid-large">
-                        <div class="stat-card-large positive">
-                            <div class="stat-icon">😊</div>
-                            <div class="stat-value">${((positive/total)*100).toFixed(1)}%</div>
-                            <div class="stat-label">Positive</div>
-                            <div class="stat-count">${positive} reviews</div>
-                        </div>
-                        <div class="stat-card-large negative">
-                            <div class="stat-icon">😞</div>
-                            <div class="stat-value">${((negative/total)*100).toFixed(1)}%</div>
-                            <div class="stat-label">Negative</div>
-                            <div class="stat-count">${negative} reviews</div>
-                        </div>
-                        <div class="stat-card-large neutral">
-                            <div class="stat-icon">😐</div>
-                            <div class="stat-value">${((neutral/total)*100).toFixed(1)}%</div>
-                            <div class="stat-label">Neutral</div>
-                            <div class="stat-count">${neutral} reviews</div>
+        const summary = currentData.summary;
+        const labels = summary.label_distribution || {};
+        const positive = (labels.positive || 0) + (labels['slightly positive'] || 0);
+        const negative = (labels.negative || 0) + (labels['slightly negative'] || 0);
+        const neutral = labels.neutral || 0;
+
+        const dashboard = document.getElementById('dataDashboard');
+        dashboard.innerHTML = `
+            <div class="stats-overview">
+                <div class="stat-card positive">
+                    <div class="stat-value">${positive}</div>
+                    <div class="stat-label">Positive Reviews</div>
+                </div>
+                <div class="stat-card negative">
+                    <div class="stat-value">${negative}</div>
+                    <div class="stat-label">Negative Reviews</div>
+                </div>
+                <div class="stat-card neutral">
+                    <div class="stat-value">${neutral}</div>
+                    <div class="stat-label">Neutral Reviews</div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Sentiment Distribution</h3>
+                <canvas id="mainChart"></canvas>
+            </div>
+        `;
+
+        createDoughnutChart(positive, negative, neutral);
+    }
+
+    function showPositiveReviews() {
+        const results = currentData.results.filter(r => r.sentiment_label.includes('positive'));
+        const top = results.slice(0, 6);
+        const themes = extractThemes(results, "positive");
+
+        const dashboard = document.getElementById('dataDashboard');
+        dashboard.innerHTML = `
+            <h3 class="section-title">😊 What Users Love</h3>
+            <div class="theme-chips" id="themeChipsPositive"></div>
+            <div class="reviews-grid">
+                ${top.map(r => `
+                    <div class="review-card positive">
+                        <div class="review-stars">${'⭐'.repeat(5)}</div>
+                        <p class="review-text">${r.full_text.substring(0, 150)}...</p>
+                        <div class="review-meta">
+                            <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
+                            <span class="score-badge">${r.sentiment_score.toFixed(1)}/5</span>
                         </div>
                     </div>
-                    <div class="chart-card">
-                        <canvas id="overviewChart"></canvas>
+                `).join('')}
+            </div>
+        `;
+
+        renderThemeChips(document.getElementById('themeChipsPositive'), themes, "positive");
+    }
+
+    function showTopLocations() {
+        const locationMap = {};
+        currentData.results.forEach(r => {
+            if (!r.city) return;
+            const key = `${r.city}, ${r.state}`;
+            if (!locationMap[key]) {
+                locationMap[key] = { positive: 0, negative: 0, total: 0 };
+            }
+            locationMap[key].total++;
+            if (r.sentiment_label.includes('positive')) locationMap[key].positive++;
+            if (r.sentiment_label.includes('negative')) locationMap[key].negative++;
+        });
+
+        const topLocations = Object.entries(locationMap)
+            .sort((a, b) => b[1].positive - a[1].positive)
+            .slice(0, 5);
+
+        const dashboard = document.getElementById('dataDashboard');
+        dashboard.innerHTML = `
+            <h3 class="section-title">🏆 Top Performing Locations</h3>
+            <div class="leaderboard">
+                ${topLocations.map(([location, stats], index) => `
+                    <div class="leaderboard-item">
+                        <div class="rank">${index + 1}</div>
+                        <div class="location-info">
+                            <div class="location-name">${location}</div>
+                            <div class="location-stats">
+                                <span class="positive-count">✓ ${stats.positive} positive</span>
+                                <span class="total-count">${stats.total} total reviews</span>
+                            </div>
+                        </div>
+                        <div class="score-percent">${((stats.positive / stats.total) * 100).toFixed(0)}%</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function showNegativeReviews() {
+        const results = currentData.results.filter(r => r.sentiment_label.includes('negative'));
+        const top = results.slice(0, 6);
+        const themes = extractThemes(results, "negative");
+
+        const dashboard = document.getElementById('dataDashboard');
+        dashboard.innerHTML = `
+            <h3 class="section-title">⚠️ Issues to Address</h3>
+            <div class="theme-chips" id="themeChipsNegative"></div>
+            <div class="issues-list">
+                ${top.map(r => `
+                    <div class="issue-item">
+                        <div class="issue-severity">High Priority</div>
+                        <p class="issue-text">${r.full_text.substring(0, 200)}...</p>
+                        <div class="issue-meta">
+                            <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
+                            <span class="score-badge negative">${r.sentiment_score.toFixed(1)}/5</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        renderThemeChips(document.getElementById('themeChipsNegative'), themes, "negative");
+    }
+
+    function showFullReport() {
+        showSentimentOverview();
+    }
+
+    function showSentimentOverview() {
+        const summary = currentData.summary;
+        const labels = summary.label_distribution || {};
+        const positive = (labels.positive || 0) + (labels['slightly positive'] || 0);
+        const negative = (labels.negative || 0) + (labels['slightly negative'] || 0);
+        const neutral = labels.neutral || 0;
+        const total = summary.total_comments || (positive + negative + neutral) || 1;
+
+        const dashboard = document.getElementById('dataDashboard');
+        dashboard.innerHTML = `
+            <div class="report-overview">
+                <h3 class="section-title">📊 Sentiment Overview</h3>
+                <div class="stats-grid-large">
+                    <div class="stat-card-large positive">
+                        <div class="stat-icon">😊</div>
+                        <div class="stat-value">${((positive / total) * 100).toFixed(1)}%</div>
+                        <div class="stat-label">Positive</div>
+                        <div class="stat-count">${positive} reviews</div>
+                    </div>
+                    <div class="stat-card-large negative">
+                        <div class="stat-icon">😞</div>
+                        <div class="stat-value">${((negative / total) * 100).toFixed(1)}%</div>
+                        <div class="stat-label">Negative</div>
+                        <div class="stat-count">${negative} reviews</div>
+                    </div>
+                    <div class="stat-card-large neutral">
+                        <div class="stat-icon">😐</div>
+                        <div class="stat-value">${((neutral / total) * 100).toFixed(1)}%</div>
+                        <div class="stat-label">Neutral</div>
+                        <div class="stat-count">${neutral} reviews</div>
                     </div>
                 </div>
-            `;
+                <div class="chart-card">
+                    <canvas id="overviewChart"></canvas>
+                </div>
+            </div>
+        `;
 
-            setTimeout(() => createBarChart(positive, negative, neutral), 100);
-        }
+        setTimeout(() => createBarChart(positive, negative, neutral), 50);
+    }
 
-        // Create doughnut chart
-        function createDoughnutChart(positive, negative, neutral) {
-            const ctx = document.getElementById('mainChart');
-            if (!ctx) return;
-            
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Positive', 'Negative', 'Neutral'],
-                    datasets: [{
-                        data: [positive, negative, neutral],
-                        backgroundColor: ['#e20074', '#666', '#ccc'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: true, position: 'bottom' } }
+    // ==========================
+    // Charts
+    // ==========================
+    function createDoughnutChart(positive, negative, neutral) {
+        const ctx = document.getElementById('mainChart');
+        if (!ctx) return;
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Positive', 'Negative', 'Neutral'],
+                datasets: [{
+                    data: [positive, negative, neutral],
+                    backgroundColor: ['#e20074', '#666666', '#cccccc'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        // Create bar chart
-        function createBarChart(positive, negative, neutral) {
-            const ctx = document.getElementById('overviewChart');
-            if (!ctx) return;
-            
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Positive', 'Negative', 'Neutral'],
-                    datasets: [{
-                        data: [positive, negative, neutral],
-                        backgroundColor: ['#e20074', '#666', '#ccc']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-        }
+    function createBarChart(positive, negative, neutral) {
+        const ctx = document.getElementById('overviewChart');
+        if (!ctx) return;
 
-        // Load data on page load
-        window.addEventListener('DOMContentLoaded', loadData);
-    </script>
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Positive', 'Negative', 'Neutral'],
+                datasets: [{
+                    data: [positive, negative, neutral],
+                    backgroundColor: ['#e20074', '#666666', '#cccccc']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // ==========================
+    // Init
+    // ==========================
+    window.addEventListener('DOMContentLoaded', loadData);
+</script>
 </body>
 </html>
