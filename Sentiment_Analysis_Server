@@ -1,0 +1,505 @@
+"""
+RoBERTa Sentiment Analysis Server with Nested JSON Support
+A Flask-based REST API server for sentiment analysis with support for both flat and nested JSON structures.
+
+Installation:
+pip install flask transformers torch scipy pandas flask-cors
+
+Usage:
+python server.py
+
+API Endpoints:
+- GET / - Serve HTML interface
+- POST /load_and_analyze - Load and analyze all JSON files
+- POST /analyze - Analyze single text
+- GET /health - Health check
+"""
+
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from scipy.special import softmax
+import logging
+import json
+import os
+import glob
+from typing import Dict, List
+
+# ==========================
+# 🔧 Configuration
+# ==========================
+app = Flask(__name__)
+CORS(app)
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Configure paths
+JSON_DATA_DIR = "data"  # Directory containing JSON files
+os.makedirs(JSON_DATA_DIR, exist_ok=True)
+
+# ==========================
+# 🤖 Model Setup
+# ==========================
+MODEL_NAME = "cardiffnlp/twitter-roberta-base-sentiment"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+logger.info(f"Loading model: {MODEL_NAME}")
+logger.info(f"Using device: {device}")
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME).to(device)
+model.eval()
+
+logger.info("✅ Model loaded successfully")
+
+# Cache for analyzed JSON data
+sentiment_cache = {}
+
+# ==========================
+# 💬 Sentiment Analysis Function
+# ==========================
+def sentiment_analysis_improved(text: str) -> Dict:
+    """Compute sentiment with improved neutral detection."""
+    if not text or not text.strip():
+        return {
+            "score": 3.0,
+            "label": "neutral",
+            "confidence": 1.0,
+            "probabilities": {"neg": 0.0, "neu": 1.0, "pos": 0.0}
+        }
+    
+    inputs = tokenizer(
+        text, 
+        return_tensors="pt", 
+        truncation=True, 
+        padding=True,
+        max_length=512
+    ).to(device)
+
+    with torch.no_grad():
+        outputs = model(**inputs)
+    
+    logits = outputs.logits[0].cpu().numpy()
+    probs = softmax(logits)
+    p_neg, p_neu, p_pos = probs
+    
+    score = 1 * p_neg + 3 * p_neu + 5 * p_pos
+    
+    if p_neu > 0.5:
+        label = "neutral"
+    elif p_neg > 0.2 and p_pos > 0.2:
+        label = "neutral"
+    elif score >= 3.8:
+        label = "positive"
+    elif score <= 2.2:
+        label = "negative"
+    else:
+        max_prob = max(p_neg, p_neu, p_pos)
+        if max_prob < 0.5:
+            label = "neutral"
+        elif p_neu > p_neg and p_neu > p_pos:
+            label = "neutral"
+        elif score > 3.0:
+            label = "slightly positive"
+        else:
+            label = "slightly negative"
+    
+    confidence = max(p_neg, p_neu, p_pos)
+    
+    return {
+        "score": round(float(score), 2),
+        "label": label,
+        "confidence": round(float(confidence), 3),
+        "probabilities": {
+            "neg": round(float(p_neg), 3),
+            "neu": round(float(p_neu), 3),
+            "pos": round(float(p_pos), 3)
+        }
+    }
+
+# ==========================
+# 📁 JSON Processing Functions
+# ==========================
+def extract_text_from_review(review: dict) -> str:
+    """Extract text from a review object, handling various field names."""
+    # Try title + text combination first
+    title = review.get('title', '')
+    text = review.get('text', '')
+    
+    if title and text:
+        return f"{title}. {text}"
+    elif text:
+        return text
+    elif title:
+        return title
+    
+    # Fallback to other common field names
+    for field in ['comment', 'review', 'content', 'message', 'body']:
+        if field in review and review[field]:
+            return str(review[field])
+    
+    return ""
+
+def process_nested_json(json_data: dict, filename: str) -> List[Dict]:
+    """
+    Process nested JSON structure (tmobile_reviews.json format).
+    Structure: dataset["states"][i]["cities"][j]["stores"][k]["reviews"]
+    """
+    results = []
+    
+    # Check if this is a nested structure
+    if "states" in json_data:
+        logger.info(f"Processing nested structure from {filename}")
+        
+        for state_obj in json_data.get("states", []):
+            state = state_obj.get("state", "Unknown")
+            
+            for city_obj in state_obj.get("cities", []):
+                city = city_obj.get("city", "Unknown")
+                
+                for store in city_obj.get("stores", []):
+                    store_info = {
+                        "store_id": store.get("store_id"),
+                        "store_name": store.get("store_name"),
+                        "address": store.get("address"),
+                        "city": store.get("city", city),
+                        "state": store.get("state", state)
+                    }
+                    
+                    for review in store.get("reviews", []):
+                        text = extract_text_from_review(review)
+                        
+                        if text:
+                            sentiment = sentiment_analysis_improved(text)
+                            
+                            result = {
+                                **store_info,
+                                "_source_file": filename,
+                                "_structure": "nested",
+                                "title": review.get("title", ""),
+                                "text": review.get("text", ""),
+                                "full_text": text,
+                                "original_rating": review.get("rating"),
+                                "original_sentiment": review.get("sentiment"),
+                                "date": review.get("date", ""),
+                                "sentiment_score": sentiment['score'],
+                                "sentiment_label": sentiment['label'],
+                                "sentiment_confidence": sentiment['confidence'],
+                                "sentiment_probabilities": sentiment['probabilities']
+                            }
+                            results.append(result)
+    
+    return results
+
+def process_flat_json(json_data, filename: str) -> List[Dict]:
+    """
+    Process flat JSON structure (simple array or object format).
+    """
+    results = []
+    
+    # Handle different flat structures
+    if isinstance(json_data, list):
+        items = json_data
+    elif isinstance(json_data, dict):
+        # Check for various common keys that contain the data
+        items = json_data.get('posts',           # BlueSky posts
+                json_data.get('data',              # Generic data
+                json_data.get('comments',          # Comments
+                json_data.get('reviews',           # Reviews
+                json_data.get('items',             # Generic items
+                [json_data])))))                   # Fallback: treat dict as single item
+    else:
+        return results
+    
+    logger.info(f"Processing flat structure from {filename} - found {len(items) if isinstance(items, list) else 0} items")
+    
+    for item in items:
+        if isinstance(item, dict):
+            text = extract_text_from_review(item)
+            
+            if text:
+                sentiment = sentiment_analysis_improved(text)
+                
+                result = {
+                    **item,
+                    "_source_file": filename,
+                    "_structure": "flat",
+                    "full_text": text,
+                    "sentiment_score": sentiment['score'],
+                    "sentiment_label": sentiment['label'],
+                    "sentiment_confidence": sentiment['confidence'],
+                    "sentiment_probabilities": sentiment['probabilities']
+                }
+                results.append(result)
+    
+    return results
+
+def load_and_process_json_file(filepath: str) -> List[Dict]:
+    """Load and process a JSON file, auto-detecting structure."""
+    try:
+        filename = os.path.basename(filepath)
+        logger.info(f"Loading {filename}...")
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
+            json_data = json.load(f)
+        
+        # Try nested structure first
+        if isinstance(json_data, dict) and "states" in json_data:
+            return process_nested_json(json_data, filename)
+        else:
+            return process_flat_json(json_data, filename)
+            
+    except Exception as e:
+        logger.error(f"Error loading {filepath}: {str(e)}")
+        return []
+
+# ==========================
+# 🌐 API Routes
+# ==========================
+@app.route('/')
+def home():
+    """Serve the main HTML page"""
+    return render_template("dashboard.html")
+
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint"""
+    return jsonify({
+        "status": "healthy",
+        "model": MODEL_NAME,
+        "device": device,
+        "version": "v2_nested_support"
+    }), 200
+
+@app.route('/load_and_analyze', methods=['POST'])
+def load_and_analyze():
+    """
+    Load all JSON files from data directory and analyze them.
+    Supports both flat and nested JSON structures.
+    
+    Response:
+    {
+        "results": [...],
+        "summary": {...}
+    }
+    """
+    try:
+        # Get all JSON files
+        json_files = glob.glob(os.path.join(JSON_DATA_DIR, "*.json"))
+        
+        if not json_files:
+            return jsonify({
+                "error": f"No JSON files found in '{JSON_DATA_DIR}' directory. Please add JSON files there.",
+                "results": [],
+                "summary": {}
+            }), 404
+        
+        all_results = []
+        file_info = []
+        
+        # Load and analyze each file
+        for filepath in json_files:
+            results = load_and_process_json_file(filepath)
+            all_results.extend(results)
+            
+            filename = os.path.basename(filepath)
+            file_info.append({
+                "filename": filename,
+                "reviews_found": len(results),
+                "structure": results[0]["_structure"] if results else "unknown"
+            })
+        
+        # Remove duplicates based on full_text
+        seen_texts = set()
+        unique_results = []
+        duplicates_removed = 0
+        
+        for result in all_results:
+            text_key = result.get('full_text', result.get('text', ''))
+            if text_key and text_key not in seen_texts:
+                seen_texts.add(text_key)
+                unique_results.append(result)
+            else:
+                duplicates_removed += 1
+        
+        all_results = unique_results
+        logger.info(f"🗑️ Removed {duplicates_removed} duplicate reviews")
+        
+        # Calculate summary statistics
+        if all_results:
+            label_counts = {}
+            for r in all_results:
+                label = r['sentiment_label']
+                label_counts[label] = label_counts.get(label, 0) + 1
+            
+            avg_score = sum(r['sentiment_score'] for r in all_results) / len(all_results)
+            avg_confidence = sum(r['sentiment_confidence'] for r in all_results) / len(all_results)
+            
+            # Group by state and city if available
+            states = set()
+            cities = set()
+            stores = set()
+            
+            for r in all_results:
+                if 'state' in r and r['state']:
+                    states.add(r['state'])
+                if 'city' in r and r['city']:
+                    cities.add(r['city'])
+                if 'store_id' in r and r['store_id']:
+                    stores.add(r['store_id'])
+            
+            summary = {
+                "total_comments": len(all_results),
+                "files_analyzed": len(json_files),
+                "file_details": file_info,
+                "label_distribution": label_counts,
+                "average_score": round(avg_score, 2),
+                "average_confidence": round(avg_confidence, 3),
+                "geographic_coverage": {
+                    "states": len(states),
+                    "cities": len(cities),
+                    "stores": len(stores)
+                }
+            }
+        else:
+            summary = {
+                "total_comments": 0,
+                "files_analyzed": len(json_files),
+                "file_details": file_info
+            }
+        
+        # Cache for chatbot use later
+        sentiment_cache['latest'] = all_results
+        sentiment_cache['summary'] = summary
+        
+        logger.info(f"✅ Processed {len(all_results)} reviews from {len(json_files)} files")
+        
+        return jsonify({
+            "results": all_results,
+            "summary": summary
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"Error in load_and_analyze: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/filter_reviews', methods=['POST'])
+def filter_reviews():
+    """
+    Filter cached reviews based on criteria.
+    
+    Request body:
+    {
+        "sentiment": "positive|negative|neutral|any",
+        "min_score": 1.0,
+        "max_score": 5.0,
+        "state": "Texas",  // optional
+        "city": "Dallas",  // optional
+        "store_id": "TX-DAL-001"  // optional
+    }
+    """
+    try:
+        if 'latest' not in sentiment_cache:
+            return jsonify({
+                "error": "No data loaded. Please run /load_and_analyze first."
+            }), 400
+        
+        data = request.get_json() or {}
+        all_reviews = sentiment_cache['latest']
+        
+        # Extract filters
+        sentiment_filter = data.get('sentiment', 'any').lower()
+        min_score = float(data.get('min_score', 1.0))
+        max_score = float(data.get('max_score', 5.0))
+        state_filter = data.get('state')
+        city_filter = data.get('city')
+        store_filter = data.get('store_id')
+        
+        # Apply filters
+        filtered = []
+        for review in all_reviews:
+            # Sentiment filter
+            if sentiment_filter != 'any':
+                if sentiment_filter not in review['sentiment_label'].lower():
+                    continue
+            
+            # Score filter
+            if not (min_score <= review['sentiment_score'] <= max_score):
+                continue
+            
+            # Geographic filters
+            if state_filter and review.get('state') != state_filter:
+                continue
+            if city_filter and review.get('city') != city_filter:
+                continue
+            if store_filter and review.get('store_id') != store_filter:
+                continue
+            
+            filtered.append(review)
+        
+        # Calculate summary for filtered results
+        if filtered:
+            label_counts = {}
+            for r in filtered:
+                label = r['sentiment_label']
+                label_counts[label] = label_counts.get(label, 0) + 1
+            
+            avg_score = sum(r['sentiment_score'] for r in filtered) / len(filtered)
+            
+            summary = {
+                "total_filtered": len(filtered),
+                "label_distribution": label_counts,
+                "average_score": round(avg_score, 2),
+                "filters_applied": {
+                    "sentiment": sentiment_filter,
+                    "score_range": f"{min_score}-{max_score}",
+                    "state": state_filter,
+                    "city": city_filter,
+                    "store": store_filter
+                }
+            }
+        else:
+            summary = {"total_filtered": 0}
+        
+        return jsonify({
+            "results": filtered,
+            "summary": summary
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"Error in filter_reviews: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/analyze', methods=['POST'])
+def analyze_sentiment():
+    """Analyze sentiment of a single text (kept for compatibility)"""
+    try:
+        data = request.get_json()
+        
+        if not data or 'text' not in data:
+            return jsonify({"error": "Missing 'text' field"}), 400
+        
+        text = data['text']
+        result = sentiment_analysis_improved(text)
+        result['text'] = text
+        
+        return jsonify(result), 200
+        
+    except Exception as e:
+        logger.error(f"Error in analyze_sentiment: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+# ==========================
+# 🚀 Run Server
+# ==========================
+if __name__ == '__main__':
+    logger.info(f"📁 JSON files directory: {os.path.abspath(JSON_DATA_DIR)}")
+    logger.info("🔄 Supports both flat and nested JSON structures")
+    
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=True
+    )

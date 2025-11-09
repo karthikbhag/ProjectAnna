@@ -1,4 +1,0 @@
-fastapi
-uvicorn[standard]
-python-dotenv
-httpx           # only if you’ll hit external APIs later
