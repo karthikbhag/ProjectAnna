@@ -1,0 +1,39 @@
+[2025-11-09 00:56:18 UTC] 🚀 Starting T-Mobile Post Classifier (updates every 10 minutes)...
+[2025-11-09 00:56:32 UTC] ✅ Collected 2224 total posts this cycle.
+[2025-11-09 00:56:32 UTC] ⚠️ No new posts for tmobile_posts.json.
+[2025-11-09 00:56:32 UTC] ⚠️ No new posts for tmobile_tuesday_posts.json.
+[2025-11-09 00:56:32 UTC] ⚠️ No new posts for tmobile_plans_posts.json.
+[2025-11-09 00:56:32 UTC] ⚠️ No new posts for tmobile_products_posts.json.
+[2025-11-09 00:56:32 UTC] ⚠️ No new posts for tmobile_devices_posts.json.
+[2025-11-09 00:56:32 UTC] 📊 Cycle summary → tmobile: 1166, tmobile_tuesday: 55, tmobile_plans: 197, tmobile_products: 233, tmobile_devices: 116
+[2025-11-09 00:56:32 UTC] ⏳ Sleeping for 10 minutes...
+
+[2025-11-09 01:07:16 UTC] ✅ Collected 2224 total posts this cycle.
+[2025-11-09 01:07:16 UTC] 💾 Added 2 new → tmobile_posts.json (Total: 1168)
+[2025-11-09 01:07:16 UTC] ⚠️ No new posts for tmobile_tuesday_posts.json.
+[2025-11-09 01:07:16 UTC] ⚠️ No new posts for tmobile_plans_posts.json.
+[2025-11-09 01:07:16 UTC] ⚠️ No new posts for tmobile_products_posts.json.
+[2025-11-09 01:07:16 UTC] 💾 Added 1 new → tmobile_devices_posts.json (Total: 117)
+[2025-11-09 01:07:16 UTC] 📊 Cycle summary → tmobile: 1168, tmobile_tuesday: 55, tmobile_plans: 197, tmobile_products: 233, tmobile_devices: 117
+[2025-11-09 01:07:16 UTC] ⏳ Sleeping for 10 minutes...
+
+[2025-11-09 01:18:11 UTC] ✅ Collected 2224 total posts this cycle.
+[2025-11-09 01:18:11 UTC] 💾 Added 2 new → tmobile_posts.json (Total: 1170)
+[2025-11-09 01:18:11 UTC] ⚠️ No new posts for tmobile_tuesday_posts.json.
+[2025-11-09 01:18:11 UTC] ⚠️ No new posts for tmobile_plans_posts.json.
+[2025-11-09 01:18:11 UTC] ⚠️ No new posts for tmobile_products_posts.json.
+[2025-11-09 01:18:11 UTC] 💾 Added 1 new → tmobile_devices_posts.json (Total: 118)
+[2025-11-09 01:18:11 UTC] 📊 Cycle summary → tmobile: 1170, tmobile_tuesday: 55, tmobile_plans: 197, tmobile_products: 233, tmobile_devices: 118
+[2025-11-09 01:18:11 UTC] ⏳ Sleeping for 10 minutes...
+
+[2025-11-09 02:22:32 UTC] ❌ Error fetching posts: 
+[2025-11-09 02:39:14 UTC] ❌ Error fetching posts: 
+[2025-11-09 02:39:19 UTC] ✅ Collected 1665 total posts this cycle.
+[2025-11-09 02:39:19 UTC] 💾 Added 4 new → tmobile_posts.json (Total: 1174)
+[2025-11-09 02:39:19 UTC] ⚠️ No new posts for tmobile_tuesday_posts.json.
+[2025-11-09 02:39:19 UTC] 💾 Added 3 new → tmobile_plans_posts.json (Total: 200)
+[2025-11-09 02:39:19 UTC] 💾 Added 1 new → tmobile_products_posts.json (Total: 234)
+[2025-11-09 02:39:19 UTC] 💾 Added 7 new → tmobile_devices_posts.json (Total: 125)
+[2025-11-09 02:39:19 UTC] 📊 Cycle summary → tmobile: 1174, tmobile_tuesday: 55, tmobile_plans: 200, tmobile_products: 234, tmobile_devices: 125
+[2025-11-09 02:39:19 UTC] ⏳ Sleeping for 10 minutes...
+
