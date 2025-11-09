@@ -1,0 +1,80 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.env
+.venv/
+env/
+ENV/
+venv/
+.cache/
+*.log
+
+# Virtual environments
+.env/
+.venv/
+env/
+ENV/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+.cache
+nosetests.xml
+*.prof
+
+# ---- Project Outputs ----
+tmobile_reviews.json
+*.json
+!package.json       # allow frontend's package.json if you add npm later
+
+# ---- Frontend ----
+node_modules/
+dist/
+build/
+coverage/
+.DS_Store
+Thumbs.db
+
+# ---- IDE / OS ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+*.tmp
+*.orig
+*.rej
+*.lock
+.DS_Store
+Thumbs.db
+
+# ---- Environment Config ----
+# Do not commit secrets or API keys
+.env
+.env.*
+*.key
+*.pem
+
+# ---- Misc ----
+# Ignore local data or cache
+data/
+tmp/
+logs/
+__pycache__/
+*.sqlite3
+*.db
+
+!backend/data/tmobile_reviews.json
