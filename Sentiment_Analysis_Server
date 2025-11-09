@@ -25,6 +25,8 @@ import json
 import os
 import glob
 from typing import Dict, List
+from google import genai
+from dotenv import load_dotenv
 
 # ==========================
 # 🔧 Configuration
@@ -260,8 +262,7 @@ def load_and_process_json_file(filepath: str) -> List[Dict]:
 # ==========================
 @app.route('/')
 def home():
-    """Serve the main HTML page"""
-    return render_template("dashboard.html")
+    return render_template("project_ana.html")
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -490,10 +491,64 @@ def analyze_sentiment():
     except Exception as e:
         logger.error(f"Error in analyze_sentiment: {str(e)}")
         return jsonify({"error": str(e)}), 500
+@app.route('/chat', methods=['POST'])
+
+def chat_with_gemini():
+    """
+    Handle chatbot questions from the frontend.
+    Expected JSON:
+    {
+        "message": "User question",
+        "use_latest_data": true
+    }
+    """
+    try:
+        data = request.get_json()
+        message = data.get("message", "")
+        use_latest = data.get("use_latest_data", False)
+
+        if not message:
+            return jsonify({"response": "Please provide a valid message."}), 400
+
+        # Load environment key
+        load_dotenv()
+        api_key = os.getenv("GEMINI_API_KEY")
+
+        if not api_key:
+            return jsonify({"response": "❌ Missing GEMINI_API_KEY in .env"}), 500
+
+        from google import genai
+        client = genai.Client(api_key=api_key)
+
+        # Build dynamic context from cache (the reviews/posts already analyzed)
+        context = ""
+        if use_latest and 'latest' in sentiment_cache:
+            context = json.dumps(sentiment_cache['latest'][:50], indent=2)
+
+        prompt = (
+            "You are Ana, an AI data analyst specialized in T-Mobile customer reviews.\n"
+            "Use the following data when relevant, and otherwise reply helpfully and conversationally.\n\n"
+            f"DATA:\n{context}\n\n"
+            f"User question: {message}"
+        )
+
+        response = client.models.generate_content(
+            model="gemini-1.5-flash",
+            contents=prompt
+        )
+
+        return jsonify({"response": response.text})
+
+    except Exception as e:
+        logger.error(f"Error in /chat: {str(e)}")
+        return jsonify({"response": f"Server error: {str(e)}"}), 500
+    
+    
 
 # ==========================
 # 🚀 Run Server
 # ==========================
+
 if __name__ == '__main__':
     logger.info(f"📁 JSON files directory: {os.path.abspath(JSON_DATA_DIR)}")
     logger.info("🔄 Supports both flat and nested JSON structures")
