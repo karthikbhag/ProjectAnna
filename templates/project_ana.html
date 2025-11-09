@@ -4,16 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Ana - T-Mobile Sentiment Analysis</title>
+
+    <!-- Favicon (uses the same logo file) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='imgs/logo.png') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='project_ana.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>📊 Project Ana</h1>
-            <p>T-Mobile Sentiment Analysis Dashboard</p>
-        </header>
+
+ <div class="container">
+    <header class="header">
+        <div class="header-logo-row">
+            <img class="logo" src="{{ url_for('static', filename='imgs/logo.png') }}" alt="Project Ana Logo">
+            <div>
+                <h1>Project_Ana</h1>
+                <p>T-Mobile Sentiment Analysis Dashboard</p>
+            </div>
+        </div>
+    </header>
 
         <div class="main-layout">
             <!-- Left: Chat Interface (Text Message Style) -->
@@ -283,28 +292,86 @@
 
             createDoughnutChart(positive, negative, neutral);
         }
+        // ===== Theme Chips Helpers =====
 
-        // Show positive reviews
-        function showPositiveReviews() {
-            const results = currentData.results.filter(r => r.sentiment_label.includes('positive')).slice(0, 6);
-            const dashboard = document.getElementById('dataDashboard');
-            
-            dashboard.innerHTML = `
-                <h3 class="section-title">😊 What Users Love</h3>
-                <div class="reviews-grid">
-                    ${results.map(r => `
-                        <div class="review-card positive">
-                            <div class="review-stars">${'⭐'.repeat(5)}</div>
-                            <p class="review-text">${r.full_text.substring(0, 150)}...</p>
-                            <div class="review-meta">
-                                <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
-                                <span class="score-badge">${r.sentiment_score.toFixed(1)}/5</span>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
+function extractThemes(results, type) {
+    // Simple keyword-based themes grounded in the data
+    const positiveConfig = [
+        { label: "Friendly staff", keywords: ["friendly", "helpful", "kind", "nice", "staff"] },
+        { label: "Fast service", keywords: ["quick", "fast", "efficient", "speed"] },
+        { label: "Clean stores", keywords: ["clean", "tidy", "organized"] },
+        { label: "Good deals & promos", keywords: ["deal", "promotion", "promo", "discount", "offer"] },
+        { label: "Network performance", keywords: ["coverage", "signal", "5g", "speed"] }
+    ];
+
+    const negativeConfig = [
+        { label: "Long wait times", keywords: ["wait", "waiting", "line", "queue"] },
+        { label: "Billing issues", keywords: ["bill", "billing", "charge", "charged", "fees"] },
+        { label: "Rude staff", keywords: ["rude", "unprofessional", "attitude"] },
+        { label: "Poor coverage", keywords: ["coverage", "no service", "dropped", "signal"] },
+        { label: "Device / repair problems", keywords: ["repair", "device", "phone issue"] }
+    ];
+
+    const config = type === "positive" ? positiveConfig : negativeConfig;
+    const textField = r => (r.full_text || r.text || "").toLowerCase();
+
+    const scores = config.map(theme => {
+        let count = 0;
+        for (const r of results) {
+            const t = textField(r);
+            if (!t) continue;
+            if (theme.keywords.some(k => t.includes(k))) count++;
         }
+        return { label: theme.label, count };
+    }).filter(t => t.count > 0);
+
+    scores.sort((a, b) => b.count - a.count);
+    return scores.slice(0, 5); // top 5
+}
+
+function renderThemeChips(container, themes, type) {
+    if (!container || !themes.length) {
+        if (container) container.innerHTML = "";
+        return;
+    }
+
+    const cls = type === "positive" ? "positive" : "negative";
+    container.innerHTML = themes.map(t => `
+        <div class="theme-chip ${cls}">
+            <span class="dot"></span>
+            <span>${t.label}</span>
+        </div>
+    `).join("");
+}
+
+
+       function showPositiveReviews() {
+    const results = currentData.results.filter(r => r.sentiment_label.includes('positive'));
+    const top = results.slice(0, 6);
+    const themes = extractThemes(results, "positive");
+
+    const dashboard = document.getElementById('dataDashboard');
+    dashboard.innerHTML = `
+        <h3 class="section-title">😊 What Users Love</h3>
+        <div class="theme-chips" id="themeChipsPositive"></div>
+        <div class="reviews-grid">
+            ${top.map(r => `
+                <div class="review-card positive">
+                    <div class="review-stars">${'⭐'.repeat(5)}</div>
+                    <p class="review-text">${r.full_text.substring(0, 150)}...</p>
+                    <div class="review-meta">
+                        <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
+                        <span class="score-badge">${r.sentiment_score.toFixed(1)}/5</span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    const chipContainer = document.getElementById('themeChipsPositive');
+    renderThemeChips(chipContainer, themes, "positive");
+}
+
 
         // Show top locations
         function showTopLocations() {
@@ -347,25 +414,32 @@
 
         // Show negative reviews
         function showNegativeReviews() {
-            const results = currentData.results.filter(r => r.sentiment_label.includes('negative')).slice(0, 6);
-            const dashboard = document.getElementById('dataDashboard');
-            
-            dashboard.innerHTML = `
-                <h3 class="section-title">⚠️ Issues to Address</h3>
-                <div class="issues-list">
-                    ${results.map(r => `
-                        <div class="issue-item">
-                            <div class="issue-severity high">High Priority</div>
-                            <p class="issue-text">${r.full_text.substring(0, 200)}...</p>
-                            <div class="issue-meta">
-                                <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
-                                <span class="score-badge negative">${r.sentiment_score.toFixed(1)}/5</span>
-                            </div>
-                        </div>
-                    `).join('')}
+    const results = currentData.results.filter(r => r.sentiment_label.includes('negative'));
+    const top = results.slice(0, 6);
+    const themes = extractThemes(results, "negative");
+
+    const dashboard = document.getElementById('dataDashboard');
+    dashboard.innerHTML = `
+        <h3 class="section-title">⚠️ Issues to Address</h3>
+        <div class="theme-chips" id="themeChipsNegative"></div>
+        <div class="issues-list">
+            ${top.map(r => `
+                <div class="issue-item">
+                    <div class="issue-severity">High Priority</div>
+                    <p class="issue-text">${r.full_text.substring(0, 200)}...</p>
+                    <div class="issue-meta">
+                        <span>📍 ${r.city || 'Unknown'}, ${r.state || ''}</span>
+                        <span class="score-badge negative">${r.sentiment_score.toFixed(1)}/5</span>
+                    </div>
                 </div>
-            `;
-        }
+            `).join('')}
+        </div>
+    `;
+
+    const chipContainer = document.getElementById('themeChipsNegative');
+    renderThemeChips(chipContainer, themes, "negative");
+}
+
 
         // Show full report
         function showFullReport() {
